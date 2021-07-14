@@ -1,28 +1,56 @@
-import { apiCall } from "../../service/baseApiCall";
-import {
-  ADD_DATA,
-  DELETE_DATA_BY_INDEX,
-  EDIT_DATA,
-  GET_ALL_DATA,
-} from "../constants/action-types";
+import { apiCall, METHOD } from "../../service/baseApiCall";
+import { LOGIN, REGISTER } from "../constants/action-types";
 
-export const addUserData = (payload) => ({
-  type: ADD_DATA,
-  payload,
-});
+export const login = () => (dispatch) => {
+  dispatch(loginInit());
+};
+const loginInit = () => (dispatch) => {
+  dispatch({
+    type: LOGIN.LOGIN_INITLIZATION,
+  });
+  apiCall(
+    "/8fea97ad-7e15-40f9-8ad0-7d0db49bedb1",
+    {},
+    (res) => dispatch(loginSuccess(res)),
+    (err) => dispatch(loginError(err)),
+    METHOD.POST,
+    {}
+  );
+};
+const loginSuccess = () => (dispatch) => {
+  dispatch({
+    type: LOGIN.LOGIN_SUCCESS,
+  });
+};
+const loginError = () => (dispatch) => {
+  dispatch({
+    type: LOGIN.LOGIN_ERORR,
+  });
+};
+export const register = () => (dispatch) => {
+  dispatch(registerInit());
+};
+const registerInit = () => (dispatch) => {
+  dispatch({
+    type: REGISTER.REGISTER_INITLIZATION,
+  });
+  apiCall(
+    "/8fea97ad-7e15-40f9-8ad0-7d0db49bedb1",
+    {},
+    (res) => dispatch(registerSuccess(res)),
+    (err) => dispatch(registerError(err)),
+    METHOD.POST,
+    {}
+  );
+};
+const registerSuccess = () => (dispatch) => {
+  dispatch({
+    type: REGISTER.REGISTER_SUCCESS,
+  });
+};
+const registerError = () => (dispatch) => {
+  dispatch({
+    type: REGISTER.REGISTER_ERORR,
+  });
+};
 
-export const editUserData = (payload, index) => ({
-  type: EDIT_DATA,
-  payload,
-  index,
-});
-
-export const getAllData = () => dispatch => apiCall('/users', null, (payload) => dispatch(({
-  type: GET_ALL_DATA,
-  payload
-})), err => console.log(err), 'get')
-
-export const deleteDataByIndex = (payload) => ({
-  type: DELETE_DATA_BY_INDEX,
-  payload,
-});

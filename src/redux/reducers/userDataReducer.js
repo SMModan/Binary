@@ -1,28 +1,31 @@
-import {
-  ADD_DATA,
-  DELETE_DATA_BY_INDEX,
-  EDIT_DATA,
-  GET_ALL_DATA,
-} from "../constants/action-types";
+import { LOGIN, REGISTER } from "../constants/action-types";
 
-const initialState = [];
-export default (state = initialState, { type, payload, index }) => {
+const initialState = {
+  loading: false,
+  isLoggedin: false,
+};
+export default (state = initialState, { type, payload = {} }) => {
   switch (type) {
-    case ADD_DATA:
-      let changedState = [...state, payload];
-      return changedState;
-    case EDIT_DATA:
-      let tempData = state;
-      tempData[index] = {
-        ...tempData[index],
+    case LOGIN.LOGIN_INITLIZATION:
+      return {
+        ...state,
         ...payload,
+        loading: true,
       };
-      return tempData;
-    case DELETE_DATA_BY_INDEX:
-      let afterDelete = state.filter((d, i) => i != payload);
-      return afterDelete;
-    case GET_ALL_DATA:
-      return payload
+    case LOGIN.LOGIN_SUCCESS:
+      return {
+        ...state,
+        ...payload,
+        isLoggedin: true,
+        loading: false,
+      };
+    case LOGIN.LOGIN_ERORR:
+      return {
+        ...state,
+        ...payload,
+        isLoggedin: false,
+        loading: false,
+      };
     default:
       return state;
   }
