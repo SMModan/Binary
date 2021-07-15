@@ -1,8 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { forgotPassword } from "../redux/action";
 import "../assets/css/login.css";
+import { ForgotPasswordSchema } from "../validationScrema/user";
 
 export default function ForgotPassword() {
+  const { push } = useHistory();
+  const isForgotpasswordSuccess = useSelector(
+    (state) => state.userDataReducer.isForgotpasswordSuccess
+  );
+  const dispatch = useDispatch();
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: ForgotPasswordSchema,
+    onSubmit: (values) => {
+      dispatch(forgotPassword());
+    },
+  });
+  useEffect(() => {
+    if (isForgotpasswordSuccess) {
+      push("/login");
+    }
+  }, [isForgotpasswordSuccess]);
+  const { errors, touched } = formik;
   return (
     <div className="container wrapper">
       <div className="panel panel-default" style={{ maxWidth: "400px" }}>
@@ -27,13 +51,16 @@ export default function ForgotPassword() {
                       <i className="glyphicon glyphicon-envelope color-blue"></i>
                     </span>
                     <input
-                      id="email"
                       name="email"
                       placeholder="email address"
                       className="form-control"
                       type="email"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.email}
                     />
                   </div>
+                  {errors.email && touched.email && <div>{errors.email}</div>}
                 </div>
                 <div className="form-group">
                   {/* <input
@@ -45,6 +72,7 @@ export default function ForgotPassword() {
                   <button
                     className="btn btn-lg btn-primary btn-block"
                     type="button"
+                    onClick={formik.handleSubmit}
                   >
                     Reset Password
                   </button>

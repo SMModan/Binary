@@ -1,8 +1,35 @@
-import React from "react";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { SignupSchema } from "../validationScrema/user";
 import "../assets/css/register.css";
+import { register } from "../redux/action";
+import { useHistory } from "react-router";
 
 export default function Register() {
+  const { push } = useHistory();
+  const isRegisterd = useSelector((state) => state.userDataReducer.isRegisterd);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (isRegisterd) {
+      push("/login");
+    }
+  }, [isRegisterd]);
+  const formik = useFormik({
+    initialValues: {
+      fullname: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
+    },
+    validationSchema: SignupSchema,
+    onSubmit: (values) => {
+      dispatch(register());
+    },
+  });
+  const { errors, touched } = formik;
+  console.log(errors.email, touched.email);
   return (
     <div className="container">
       <div className="card bg-light">
@@ -31,11 +58,17 @@ export default function Register() {
                 </span>
               </div>
               <input
-                name=""
+                name="fullname"
                 className="form-control"
+                onBlur={formik.handleBlur}
                 placeholder="Full name"
                 type="text"
+                onChange={formik.handleChange}
+                value={formik.values.fullname}
               />
+              {errors.fullname && touched.fullname && (
+                <div>{errors.fullname}</div>
+              )}
             </div>
             {/* <!-- form-group// --> */}
             <div className="form-group input-group">
@@ -46,49 +79,17 @@ export default function Register() {
                 </span>
               </div>
               <input
-                name=""
+                name="email"
                 className="form-control"
-                placeholder="Email address"
+                placeholder="EmailAddress"
                 type="email"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.email}
               />
+              {errors.email && touched.email && <div>{errors.email}</div>}
             </div>
             {/* <!-- form-group// --> */}
-            <div className="form-group input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  {" "}
-                  <i className="fa fa-phone"></i>{" "}
-                </span>
-              </div>
-              <select className="custom-select" style={{ maxWidth: "120px" }}>
-                <option selected="">+971</option>
-                <option value="1">+972</option>
-                <option value="2">+198</option>
-                <option value="3">+701</option>
-              </select>
-              <input
-                name=""
-                className="form-control"
-                placeholder="Phone number"
-                type="text"
-              />
-            </div>
-            {/* <!-- form-group// --> */}
-            <div className="form-group input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  {" "}
-                  <i className="fa fa-building"></i>{" "}
-                </span>
-              </div>
-              <select className="form-control">
-                <option selected=""> Select job type</option>
-                <option>Designer</option>
-                <option>Manager</option>
-                <option>Accaunting</option>
-              </select>
-            </div>
-            {/* <!-- form-group end.// --> */}
             <div className="form-group input-group">
               <div className="input-group-prepend">
                 <span className="input-group-text">
@@ -97,10 +98,17 @@ export default function Register() {
                 </span>
               </div>
               <input
+                name="password"
                 className="form-control"
+                onBlur={formik.handleBlur}
                 placeholder="Create password"
                 type="password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
               />
+              {errors.password && touched.password && (
+                <div>{errors.password}</div>
+              )}
             </div>
             {/* <!-- form-group// --> */}
             <div className="form-group input-group">
@@ -111,14 +119,24 @@ export default function Register() {
                 </span>
               </div>
               <input
+                name="passwordConfirmation"
                 className="form-control"
+                onBlur={formik.handleBlur}
                 placeholder="Repeat password"
                 type="password"
+                onChange={formik.handleChange}
+                value={formik.values.passwordConfirmation}
               />
+              {errors.passwordConfirmation && touched.passwordConfirmation && (
+                <div>{errors.passwordConfirmation}</div>
+              )}
             </div>
-            {/* <!-- form-group// -->                                       */}
             <div className="form-group">
-              <button type="submit" className="btn btn-primary btn-block">
+              <button
+                type="button"
+                onClick={formik.handleSubmit}
+                className="btn btn-primary btn-block"
+              >
                 {" "}
                 Create Account{" "}
               </button>

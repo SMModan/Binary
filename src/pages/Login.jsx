@@ -1,25 +1,34 @@
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import { login } from "../redux/action";
 import "../assets/css/login.css";
 import { useFormik } from "formik";
+import { LoginSchema } from "../validationScrema/user";
 
 export default function Login() {
+  const { push } = useHistory();
+  const isLoggedin = useSelector((state) => state.userDataReducer.isLoggedin);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      name: "",
+      email: "",
       password: "",
     },
+    validationSchema: LoginSchema,
     onSubmit: (values) => {
       dispatch(login());
       console.log(values);
     },
   });
-
+  useEffect(() => {
+    if (isLoggedin) {
+      push("/home");
+    }
+  }, [isLoggedin]);
+  const { errors, touched } = formik;
   return (
     <div className="content wrapper fadeInDown">
       <div id="formContent">
@@ -32,19 +41,23 @@ export default function Login() {
           <input
             type="text"
             className="fadeIn second"
-            name="name"
+            name="email"
             placeholder="login"
             onChange={formik.handleChange}
-            value={formik.values.name}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
           />
+          {errors.email && touched.email && <div>{errors.email}</div>}
           <input
             type="password"
             className="fadeIn third"
             name="password"
             placeholder="password"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.password}
           />
+          {errors.password && touched.password && <div>{errors.password}</div>}
           <input
             type="submit"
             className="fadeIn fourth"
