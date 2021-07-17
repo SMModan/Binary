@@ -7,6 +7,7 @@ export const routes = [
   {
     path: "/home",
     component: Home,
+    name: "Dashboard",
   },
   {
     path: "/login",

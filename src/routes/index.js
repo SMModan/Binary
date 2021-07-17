@@ -17,7 +17,7 @@ export default function Routes() {
         {routes.map((item, index) => (
           <Route key={index} {...item} />
         ))}
-        <Route render={() => <Redirect to="/home" />} />
+        <Route render={() => <Redirect to="/login" />} />
       </Switch>
     </Router>
   );

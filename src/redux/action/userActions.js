@@ -1,5 +1,5 @@
 import { apiCall, METHOD } from "../../service/baseApiCall";
-import { LOGIN, REGISTER,FORGOT_PASSWORD } from "../constants/action-types";
+import { LOGIN, REGISTER, FORGOT_PASSWORD, LOGOUT } from "../constants/action-types";
 
 export const login = () => (dispatch) => {
   dispatch(loginInit());
@@ -53,7 +53,11 @@ const registerError = () => (dispatch) => {
     type: REGISTER.REGISTER_ERORR,
   });
 };
-
+export const logout = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT.LOGOUT_INITLIZATION,
+  });
+};
 export const forgotPassword = () => (dispatch) => {
   dispatch(forgotPasswordInit());
 };

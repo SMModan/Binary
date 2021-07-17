@@ -1,4 +1,9 @@
-import { LOGIN, REGISTER, FORGOT_PASSWORD } from "../constants/action-types";
+import {
+  LOGIN,
+  REGISTER,
+  FORGOT_PASSWORD,
+  LOGOUT,
+} from "../constants/action-types";
 
 const initialState = {
   loading: false,
@@ -22,6 +27,12 @@ export default (state = initialState, { type, payload = {} }) => {
         loading: false,
       };
     case LOGIN.LOGIN_ERORR:
+      return {
+        ...state,
+        ...payload,
+        isLoggedin: false,
+      };
+    case LOGOUT.LOGOUT_INITLIZATION:
       return {
         ...state,
         ...payload,
