@@ -18,7 +18,7 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-import anime3 from '../../assets/img/anime3.png'
+import anime3 from "../../assets/img/anime3.png";
 // reactstrap components
 import {
   Button,
@@ -45,7 +45,7 @@ function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
     // Specify how to clean up after this effect:
@@ -76,7 +76,11 @@ function AdminNavbar(props) {
   };
   return (
     <React.Fragment>
-      <Navbar className={classNames("navbar-absolute", color)} expand="lg">
+      <Navbar
+        //className={classNames("", color)}
+        className={classNames("navbar-absolute", color)}
+        expand="lg"
+      >
         <Container fluid>
           <div className="navbar-wrapper">
             <div
@@ -154,10 +158,7 @@ function AdminNavbar(props) {
                   onClick={(e) => e.preventDefault()}
                 >
                   <div className="photo">
-                    <img
-                      alt="..."
-                      src={anime3}
-                    />
+                    <img alt="..." src={anime3} />
                   </div>
                   <b className="caret d-none d-lg-block d-xl-block" />
                   <p className="d-lg-none">Log out</p>
@@ -170,7 +171,7 @@ function AdminNavbar(props) {
                     <DropdownItem className="nav-item">Settings</DropdownItem>
                   </NavLink>
                   <DropdownItem divider tag="li" />
-                  <NavLink tag="li" onClick={()=>dispatch(logout())}>
+                  <NavLink tag="li" onClick={() => dispatch(logout())}>
                     <DropdownItem className="nav-item">Log out</DropdownItem>
                   </NavLink>
                 </DropdownMenu>

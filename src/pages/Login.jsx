@@ -20,7 +20,7 @@ export default function Login() {
     validationSchema: LoginSchema,
     onSubmit: (values) => {
       dispatch(login());
-      console.log(values);
+      // console.log(values);
     },
   });
   useEffect(() => {

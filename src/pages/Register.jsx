@@ -6,6 +6,8 @@ import { SignupSchema } from "../validationScrema/user";
 import "../assets/css/register.css";
 import { register } from "../redux/action";
 import { useHistory } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function Register() {
   const { push } = useHistory();
@@ -30,6 +32,78 @@ export default function Register() {
   });
   const { errors, touched } = formik;
   console.log(errors.email, touched.email);
+
+  return (
+    <div className="content wrapper fadeInDown">
+      <div id="formContent">
+        <div className="fadeIn first">
+          <FontAwesomeIcon className="m-2" size="4x" icon={faUserCircle} />
+        </div>
+
+        {/* <!-- Login Form --> */}
+        <form>
+          <input
+            name="fullname"
+            className="form-control"
+            onBlur={formik.handleBlur}
+            placeholder="Full name"
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.fullname}
+          />
+          {errors.fullname && touched.fullname && <div>{errors.fullname}</div>}
+          <input
+            name="email"
+            className="form-control"
+            placeholder="EmailAddress"
+            type="email"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
+          {errors.email && touched.email && <div>{errors.email}</div>}
+          <input
+            name="password"
+            className="form-control"
+            onBlur={formik.handleBlur}
+            placeholder="Create password"
+            type="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+          />
+          {errors.password && touched.password && <div>{errors.password}</div>}
+          <input
+            name="passwordConfirmation"
+            className="form-control"
+            onBlur={formik.handleBlur}
+            placeholder="Repeat password"
+            type="password"
+            onChange={formik.handleChange}
+            value={formik.values.passwordConfirmation}
+          />
+          {errors.passwordConfirmation && touched.passwordConfirmation && (
+            <div>{errors.passwordConfirmation}</div>
+          )}
+          <input
+            type="submit"
+            className="fadeIn fourth"
+            value="Create Account"
+            onClick={formik.handleSubmit}
+          />
+        </form>
+        {/* <hr/> */}
+        <p className="text-center">
+          Have an account? <Link to="/login">Log In</Link>{" "}
+        </p>
+        {/* <!-- Remind Passowrd --> */}
+        <div id="formFooter">
+          <Link className="underlineHover" to="/forgot-password">
+            Forgot Password?
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
   return (
     <div className="container">
       <div className="card bg-light">
@@ -57,18 +131,6 @@ export default function Register() {
                   <i className="fa fa-user"></i>{" "}
                 </span>
               </div>
-              <input
-                name="fullname"
-                className="form-control"
-                onBlur={formik.handleBlur}
-                placeholder="Full name"
-                type="text"
-                onChange={formik.handleChange}
-                value={formik.values.fullname}
-              />
-              {errors.fullname && touched.fullname && (
-                <div>{errors.fullname}</div>
-              )}
             </div>
             {/* <!-- form-group// --> */}
             <div className="form-group input-group">
@@ -78,16 +140,6 @@ export default function Register() {
                   <i className="fa fa-envelope"></i>{" "}
                 </span>
               </div>
-              <input
-                name="email"
-                className="form-control"
-                placeholder="EmailAddress"
-                type="email"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.email}
-              />
-              {errors.email && touched.email && <div>{errors.email}</div>}
             </div>
             {/* <!-- form-group// --> */}
             <div className="form-group input-group">
@@ -97,18 +149,6 @@ export default function Register() {
                   <i className="fa fa-lock"></i>{" "}
                 </span>
               </div>
-              <input
-                name="password"
-                className="form-control"
-                onBlur={formik.handleBlur}
-                placeholder="Create password"
-                type="password"
-                onChange={formik.handleChange}
-                value={formik.values.password}
-              />
-              {errors.password && touched.password && (
-                <div>{errors.password}</div>
-              )}
             </div>
             {/* <!-- form-group// --> */}
             <div className="form-group input-group">
@@ -118,18 +158,6 @@ export default function Register() {
                   <i className="fa fa-lock"></i>{" "}
                 </span>
               </div>
-              <input
-                name="passwordConfirmation"
-                className="form-control"
-                onBlur={formik.handleBlur}
-                placeholder="Repeat password"
-                type="password"
-                onChange={formik.handleChange}
-                value={formik.values.passwordConfirmation}
-              />
-              {errors.passwordConfirmation && touched.passwordConfirmation && (
-                <div>{errors.passwordConfirmation}</div>
-              )}
             </div>
             <div className="form-group">
               <button

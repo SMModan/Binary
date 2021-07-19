@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   loading: false,
-  isLoggedin: false,
+  isLoggedin: !!localStorage.getItem("login"),
   isRegisterd: false,
   isForgotpasswordSuccess: false,
 };

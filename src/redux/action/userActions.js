@@ -1,5 +1,10 @@
 import { apiCall, METHOD } from "../../service/baseApiCall";
-import { LOGIN, REGISTER, FORGOT_PASSWORD, LOGOUT } from "../constants/action-types";
+import {
+  LOGIN,
+  REGISTER,
+  FORGOT_PASSWORD,
+  LOGOUT,
+} from "../constants/action-types";
 
 export const login = () => (dispatch) => {
   dispatch(loginInit());
@@ -18,6 +23,7 @@ const loginInit = () => (dispatch) => {
   );
 };
 const loginSuccess = () => (dispatch) => {
+  localStorage.setItem("login", "Success");
   dispatch({
     type: LOGIN.LOGIN_SUCCESS,
   });
