@@ -41,7 +41,7 @@ export default function Register() {
       email: "",
       password: "",
       passwordConfirmation: "",
-      Employee_size: 0,
+      Employee_size: null,
     },
     validationSchema: SignupSchema,
     onSubmit: (values) => {
