@@ -1,3 +1,8 @@
+import {
+  FORGOT_PASSWORD_SERVICE,
+  LOGIN_SERVICE,
+  SIGNUP_SERVICE,
+} from "../../service/apiEndpoints";
 import { apiCall, METHOD } from "../../service/baseApiCall";
 import {
   LOGIN,
@@ -6,16 +11,16 @@ import {
   LOGOUT,
 } from "../constants/action-types";
 
-export const login = () => (dispatch) => {
-  dispatch(loginInit());
+export const login = (data) => (dispatch) => {
+  dispatch(loginInit(data));
 };
-const loginInit = () => (dispatch) => {
+const loginInit = (data) => (dispatch) => {
   dispatch({
     type: LOGIN.LOGIN_INITLIZATION,
   });
   apiCall(
-    "/8fea97ad-7e15-40f9-8ad0-7d0db49bedb1",
-    {},
+    LOGIN_SERVICE,
+    data,
     (res) => dispatch(loginSuccess(res)),
     (err) => dispatch(loginError(err)),
     METHOD.POST,
@@ -33,16 +38,35 @@ const loginError = () => (dispatch) => {
     type: LOGIN.LOGIN_ERORR,
   });
 };
-export const register = () => (dispatch) => {
-  dispatch(registerInit());
+export const register = (data) => (dispatch) => {
+  const { email, Company_name, password, Industry_ID, Employee_size } = data;
+  const registerData = {
+    Company_name,
+    email,
+    password,
+    //Company_logo:,
+    Industry_ID,
+    Employee_size,
+    BR_No: "Test BR",
+    BR_Proof: null,
+    BR_Verified: 1,
+    BR_Verification_Complete_date: "2021-07-20 17:38:16",
+    Revenue_class: 9,
+    Revenue_source: 8,
+    Default_currency: 1,
+    Accounting_SW_status: 1,
+    Accounting_SW_type: 1,
+    Accounting_SW_ID: "Test",
+  };
+  dispatch(registerInit(registerData));
 };
-const registerInit = () => (dispatch) => {
+const registerInit = (data) => (dispatch) => {
   dispatch({
     type: REGISTER.REGISTER_INITLIZATION,
   });
   apiCall(
-    "/8fea97ad-7e15-40f9-8ad0-7d0db49bedb1",
-    {},
+    SIGNUP_SERVICE,
+    data,
     (res) => dispatch(registerSuccess(res)),
     (err) => dispatch(registerError(err)),
     METHOD.POST,
@@ -64,16 +88,16 @@ export const logout = () => (dispatch) => {
     type: LOGOUT.LOGOUT_INITLIZATION,
   });
 };
-export const forgotPassword = () => (dispatch) => {
-  dispatch(forgotPasswordInit());
+export const forgotPassword = (data) => (dispatch) => {
+  dispatch(forgotPasswordInit(data));
 };
-const forgotPasswordInit = () => (dispatch) => {
+const forgotPasswordInit = (data) => (dispatch) => {
   dispatch({
     type: FORGOT_PASSWORD.FORGOT_PASSWORD_INITLIZATION,
   });
   apiCall(
-    "/8fea97ad-7e15-40f9-8ad0-7d0db49bedb1",
-    {},
+    FORGOT_PASSWORD_SERVICE,
+    data,
     (res) => dispatch(forgotPasswordSuccess(res)),
     (err) => dispatch(forgotPasswordError(err)),
     METHOD.POST,

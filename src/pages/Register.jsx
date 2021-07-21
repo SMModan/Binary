@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { SignupSchema } from "../validationScrema/user";
@@ -8,9 +8,25 @@ import { register } from "../redux/action";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import Select from "react-select";
 
 export default function Register() {
   const { push } = useHistory();
+  const [industryOptions, setIndustryOptions] = useState([
+    {
+      value: 1,
+      label: "Test Industry 1",
+    },
+    {
+      value: 2,
+      label: "Test Industry 2",
+    },
+    {
+      value: 3,
+      label: "Test Industry 3",
+    },
+  ]);
+
   const isRegisterd = useSelector((state) => state.userDataReducer.isRegisterd);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -20,18 +36,25 @@ export default function Register() {
   }, [isRegisterd]);
   const formik = useFormik({
     initialValues: {
-      fullname: "",
+      Company_name: "",
+      Industry_ID: "",
       email: "",
       password: "",
       passwordConfirmation: "",
+      Employee_size: 0,
     },
     validationSchema: SignupSchema,
     onSubmit: (values) => {
-      dispatch(register());
+      console.log(values);
+      dispatch(register(values));
     },
   });
   const { errors, touched } = formik;
-  console.log(errors.email, touched.email);
+  // Company_name
+  // email
+  // password
+  // Industry_ID
+  // Company_logo
 
   return (
     <div className="content wrapper fadeInDown">
@@ -43,15 +66,59 @@ export default function Register() {
         {/* <!-- Login Form --> */}
         <form>
           <input
-            name="fullname"
+            name="Company_name"
             className="form-control"
             onBlur={formik.handleBlur}
-            placeholder="Full name"
+            placeholder="Company name"
             type="text"
             onChange={formik.handleChange}
-            value={formik.values.fullname}
+            value={formik.values.Company_name}
           />
-          {errors.fullname && touched.fullname && <div>{errors.fullname}</div>}
+          {errors.Company_name && touched.Company_name && (
+            <div>{errors.Company_name}</div>
+          )}
+          <Select
+            placeholder="Industry"
+            styles={{
+              container: (base) => ({
+                ...base,
+                textAlign: "center",
+                textDecoration: "none",
+                display: "inline-block",
+                fontSize: "16px",
+                margin: "5px",
+                width: "85%",
+                transition: "all 0.5s ease-in-out",
+                borderRadius: "5px 5px 5px 5px",
+              }),
+              control: (base) => ({ ...base, borderRadius: 5 }),
+            }}
+            onBlur={formik.handleBlur}
+            onChange={(selectedOption) => {
+              formik.setFieldValue("Industry_ID", selectedOption.value);
+              // This inline function can now completely be reaplce by handleChange("Industry_ID")
+              // formik.handleChange("Industry_ID")(selectedOption);
+            }}
+            // isSearchable={true}
+            options={industryOptions}
+            name="Industry_ID"
+            // isLoading={false}
+            // loadingMessage={() => "Fetching Industry"}
+            // noOptionsMessage={() => "Industry appears here"}
+          />
+          {errors.Industry_ID && touched.Industry_ID && (
+            <div>{errors.Industry_ID}</div>
+          )}
+          <input
+            name="Employee_size"
+            className="form-control"
+            placeholder="Employee size"
+            type="number"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.Employee_size}
+          />
+          {errors.Employee_size && touched.Employee_size && <div>{errors.Employee_size}</div>}
           <input
             name="email"
             className="form-control"
@@ -88,6 +155,7 @@ export default function Register() {
             type="submit"
             className="fadeIn fourth"
             value="Create Account"
+            disabled={!(formik.isValid && formik.dirty)}
             onClick={formik.handleSubmit}
           />
         </form>

@@ -18,7 +18,7 @@ export default function ForgotPassword() {
     },
     validationSchema: ForgotPasswordSchema,
     onSubmit: (values) => {
-      dispatch(forgotPassword());
+      dispatch(forgotPassword(values));
     },
   });
   useEffect(() => {
@@ -63,12 +63,6 @@ export default function ForgotPassword() {
                   {errors.email && touched.email && <div>{errors.email}</div>}
                 </div>
                 <div className="form-group">
-                  {/* <input
-                        name="recover-submit"
-                        className="btn btn-lg btn-primary btn-block"
-                        value="Reset Password"
-                        
-                      /> */}
                   <button
                     className="btn btn-lg btn-primary btn-block"
                     type="button"
