@@ -30,7 +30,7 @@ export default function Login() {
   }, [isLoggedin]);
   const { errors, touched } = formik;
   return (
-    <div className="content wrapper fadeInDown">
+    <div className="content wrapper fadeInDown custom-input">
       <div id="formContent">
         <div className="fadeIn first">
           <FontAwesomeIcon className="m-2" size="4x" icon={faUserCircle} />

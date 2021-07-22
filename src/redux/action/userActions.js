@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   FORGOT_PASSWORD_SERVICE,
   LOGIN_SERVICE,
@@ -46,18 +47,27 @@ export const register = (data) => (dispatch) => {
     password,
     //Company_logo:,
     Industry_ID,
-    Employee_size,
+    // Employee_size: Employee_size.toString(),
     BR_No: "Test BR",
-    BR_Proof: null,
-    BR_Verified: 1,
+    BR_Proof: "",
+    BR_Verified: "1",
     BR_Verification_Complete_date: "2021-07-20 17:38:16",
-    Revenue_class: 9,
-    Revenue_source: 8,
-    Default_currency: 1,
-    Accounting_SW_status: 1,
-    Accounting_SW_type: 1,
+    Revenue_class: "9",
+    Revenue_source: "8",
+    Default_currency: "1",
+    Accounting_SW_status: "1",
+    Accounting_SW_type: "1",
     Accounting_SW_ID: "Test",
   };
+  // axios
+  //   .post("http://18.188.8.195:3100/v1/company/signUp", registerData)
+  //   .then((res) => console.log(res))
+  //   .catch((err) => console.log(err));
+  // var formData = new FormData();
+
+  // for (var key in registerData) {
+  //   formData.append(key, registerData[key]);
+  // }
   dispatch(registerInit(registerData));
 };
 const registerInit = (data) => (dispatch) => {

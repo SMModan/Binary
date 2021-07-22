@@ -3,6 +3,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import VerifyOTP from "../pages/VerifyOTP";
 
 export const routes = [
   {
@@ -26,5 +27,9 @@ export const routes = [
   {
     path: "/forgot-password",
     component: ForgotPassword,
+  },
+  {
+    path: "/verify-OTP",
+    component: VerifyOTP,
   },
 ];

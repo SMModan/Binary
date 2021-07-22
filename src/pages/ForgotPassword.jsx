@@ -28,7 +28,7 @@ export default function ForgotPassword() {
   }, [isForgotpasswordSuccess]);
   const { errors, touched } = formik;
   return (
-    <div className="container wrapper">
+    <div className="container wrapper custom-input">
       <div className="panel panel-default" style={{ maxWidth: "400px" }}>
         <div className="panel-body">
           <div className="text-center">

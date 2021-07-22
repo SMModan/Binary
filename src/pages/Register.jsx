@@ -9,29 +9,20 @@ import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Select from "react-select";
+import { getIndustries } from "../service/APIcalls";
 
 export default function Register() {
   const { push } = useHistory();
-  const [industryOptions, setIndustryOptions] = useState([
-    {
-      value: 1,
-      label: "Test Industry 1",
-    },
-    {
-      value: 2,
-      label: "Test Industry 2",
-    },
-    {
-      value: 3,
-      label: "Test Industry 3",
-    },
-  ]);
+  const [industryOptions, setIndustryOptions] = useState();
+  useEffect(() => {
+    getIndustries(setIndustryOptions);
+  }, []);
 
   const isRegisterd = useSelector((state) => state.userDataReducer.isRegisterd);
   const dispatch = useDispatch();
   useEffect(() => {
     if (isRegisterd) {
-      push("/login");
+      push("/verify-OTP");
     }
   }, [isRegisterd]);
   const formik = useFormik({
@@ -50,14 +41,9 @@ export default function Register() {
     },
   });
   const { errors, touched } = formik;
-  // Company_name
-  // email
-  // password
-  // Industry_ID
-  // Company_logo
 
   return (
-    <div className="content wrapper fadeInDown">
+    <div className="content wrapper fadeInDown custom-input">
       <div id="formContent">
         <div className="fadeIn first">
           <FontAwesomeIcon className="m-2" size="4x" icon={faUserCircle} />
@@ -118,7 +104,9 @@ export default function Register() {
             onChange={formik.handleChange}
             value={formik.values.Employee_size}
           />
-          {errors.Employee_size && touched.Employee_size && <div>{errors.Employee_size}</div>}
+          {errors.Employee_size && touched.Employee_size && (
+            <div>{errors.Employee_size}</div>
+          )}
           <input
             name="email"
             className="form-control"
