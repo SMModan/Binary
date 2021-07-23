@@ -3,6 +3,7 @@ import {
   FORGOT_PASSWORD_SERVICE,
   LOGIN_SERVICE,
   SIGNUP_SERVICE,
+  VERIFY_OTP,
 } from "../../service/apiEndpoints";
 import { apiCall, METHOD } from "../../service/baseApiCall";
 import {
@@ -10,6 +11,7 @@ import {
   REGISTER,
   FORGOT_PASSWORD,
   LOGOUT,
+  VERIFY_OTP_ACTION,
 } from "../constants/action-types";
 
 export const login = (data) => (dispatch) => {
@@ -68,6 +70,7 @@ export const register = (data) => (dispatch) => {
   // for (var key in registerData) {
   //   formData.append(key, registerData[key]);
   // }
+  localStorage.setItem("email", data.email);
   dispatch(registerInit(registerData));
 };
 const registerInit = (data) => (dispatch) => {
@@ -89,6 +92,7 @@ const registerSuccess = () => (dispatch) => {
   });
 };
 const registerError = () => (dispatch) => {
+  localStorage.removeItem("email");
   dispatch({
     type: REGISTER.REGISTER_ERORR,
   });
@@ -122,5 +126,34 @@ const forgotPasswordSuccess = () => (dispatch) => {
 const forgotPasswordError = () => (dispatch) => {
   dispatch({
     type: FORGOT_PASSWORD.FORGOT_PASSWORD_ERORR,
+  });
+};
+
+
+
+export const verifyOtp = (data) => (dispatch) => {
+  dispatch(verifyOtpInit(data));
+};
+const verifyOtpInit = (data) => (dispatch) => {
+  dispatch({
+    type: VERIFY_OTP_ACTION.VERIFY_OTP_ACTION_INITLIZATION,
+  });
+  apiCall(
+    VERIFY_OTP,
+    data,
+    (res) => dispatch(verifyOtpSuccess(res)),
+    (err) => dispatch(verifyOtpError(err)),
+    METHOD.POST,
+    {}
+  );
+};
+const verifyOtpSuccess = () => (dispatch) => {
+  dispatch({
+    type: VERIFY_OTP_ACTION.VERIFY_OTP_ACTION_SUCCESS,
+  });
+};
+const verifyOtpError = () => (dispatch) => {
+  dispatch({
+    type: VERIFY_OTP_ACTION.VERIFY_OTP_ACTION_ERORR,
   });
 };
