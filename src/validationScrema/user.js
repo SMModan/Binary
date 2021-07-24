@@ -19,12 +19,12 @@ const SignupSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
-  Employee_size: Yup.number("Must be number")
-    .required("Is required")
-    .positive()
-    .integer()
-    .min(0, "Min is 0")
-    .max(22, "max is 20"),
+  // Employee_size: Yup.number("Must be number")
+  //   .required("Is required")
+  //   .positive()
+  //   .integer()
+  //   .min(0, "Min is 0")
+  //   .max(22, "max is 20"),
   Industry_ID: Yup.number().required("Industry is required"),
   password: Yup.string().required("Password is required"),
   passwordConfirmation: Yup.string()

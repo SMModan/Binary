@@ -63,39 +63,8 @@ export default function Register() {
           {errors.Company_name && touched.Company_name && (
             <div>{errors.Company_name}</div>
           )}
-          <Select
-            placeholder="Industry"
-            styles={{
-              container: (base) => ({
-                ...base,
-                textAlign: "center",
-                textDecoration: "none",
-                display: "inline-block",
-                fontSize: "16px",
-                margin: "5px",
-                width: "85%",
-                transition: "all 0.5s ease-in-out",
-                borderRadius: "5px 5px 5px 5px",
-              }),
-              control: (base) => ({ ...base, borderRadius: 5 }),
-            }}
-            onBlur={formik.handleBlur}
-            onChange={(selectedOption) => {
-              formik.setFieldValue("Industry_ID", selectedOption.value);
-              // This inline function can now completely be reaplce by handleChange("Industry_ID")
-              // formik.handleChange("Industry_ID")(selectedOption);
-            }}
-            // isSearchable={true}
-            options={industryOptions}
-            name="Industry_ID"
-            // isLoading={false}
-            // loadingMessage={() => "Fetching Industry"}
-            // noOptionsMessage={() => "Industry appears here"}
-          />
-          {errors.Industry_ID && touched.Industry_ID && (
-            <div>{errors.Industry_ID}</div>
-          )}
-          <input
+
+          {/* <input
             name="Employee_size"
             className="form-control"
             placeholder="Employee size"
@@ -106,7 +75,7 @@ export default function Register() {
           />
           {errors.Employee_size && touched.Employee_size && (
             <div>{errors.Employee_size}</div>
-          )}
+          )} */}
           <input
             name="email"
             className="form-control"
@@ -139,6 +108,51 @@ export default function Register() {
           {errors.passwordConfirmation && touched.passwordConfirmation && (
             <div>{errors.passwordConfirmation}</div>
           )}
+          <Select
+            placeholder="Industry"
+            styles={{
+              container: (base) => ({
+                ...base,
+                textAlign: "center",
+                textDecoration: "none",
+                display: "inline-block",
+                fontSize: "16px",
+                margin: "5px",
+                width: "85%",
+                transition: "all 0.5s ease-in-out",
+                borderRadius: "5px 5px 5px 5px",
+              }),
+              control: (base) => ({
+                ...base,
+                borderRadius: 5,
+                border: "none",
+                backgroundColor: "hsl(0deg 0% 96%)",
+              }),
+              placeholder: (base) => ({
+                ...base,
+                padding: "15px 25px",
+              }),
+              singleValue: (base) => ({
+                ...base,
+                padding: "15px 25px",
+              }),
+            }}
+            onBlur={formik.handleBlur}
+            onChange={(selectedOption) => {
+              formik.setFieldValue("Industry_ID", selectedOption.value);
+              // This inline function can now completely be reaplce by handleChange("Industry_ID")
+              // formik.handleChange("Industry_ID")(selectedOption);
+            }}
+            // isSearchable={true}
+            options={industryOptions}
+            name="Industry_ID"
+            // isLoading={false}
+            // loadingMessage={() => "Fetching Industry"}
+            // noOptionsMessage={() => "Industry appears here"}
+          />
+          {errors.Industry_ID && touched.Industry_ID && (
+            <div>{errors.Industry_ID}</div>
+          )}
           <input
             type="submit"
             className="fadeIn fourth"
@@ -148,7 +162,7 @@ export default function Register() {
           />
         </form>
         {/* <hr/> */}
-        <p className="text-center">
+        <p className="text-dark text-center">
           Have an account? <Link to="/login">Log In</Link>{" "}
         </p>
         {/* <!-- Remind Passowrd --> */}
@@ -157,80 +171,6 @@ export default function Register() {
             Forgot Password?
           </Link>
         </div>
-      </div>
-    </div>
-  );
-  return (
-    <div className="container">
-      <div className="card bg-light">
-        <article className="card-body mx-auto" style={{ maxWidth: "400px" }}>
-          <h4 className="card-title mt-3 text-center">Create Account</h4>
-          <p className="text-center">Get started with your free account</p>
-          <p>
-            <a href="" className="btn btn-block btn-twitter">
-              {" "}
-              <i className="fab fa-twitter"></i>   Login via Twitter
-            </a>
-            <a href="" className="btn btn-block btn-facebook">
-              {" "}
-              <i className="fab fa-facebook-f"></i>   Login via facebook
-            </a>
-          </p>
-          <p className="divider-text">
-            <span className="bg-light">OR</span>
-          </p>
-          <form>
-            <div className="form-group input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  {" "}
-                  <i className="fa fa-user"></i>{" "}
-                </span>
-              </div>
-            </div>
-            {/* <!-- form-group// --> */}
-            <div className="form-group input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  {" "}
-                  <i className="fa fa-envelope"></i>{" "}
-                </span>
-              </div>
-            </div>
-            {/* <!-- form-group// --> */}
-            <div className="form-group input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  {" "}
-                  <i className="fa fa-lock"></i>{" "}
-                </span>
-              </div>
-            </div>
-            {/* <!-- form-group// --> */}
-            <div className="form-group input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  {" "}
-                  <i className="fa fa-lock"></i>{" "}
-                </span>
-              </div>
-            </div>
-            <div className="form-group">
-              <button
-                type="button"
-                onClick={formik.handleSubmit}
-                className="btn btn-primary btn-block"
-              >
-                {" "}
-                Create Account{" "}
-              </button>
-            </div>
-            {/* <!-- form-group// -->       */}
-            <p className="text-center">
-              Have an account? <Link to="/login">Log In</Link>{" "}
-            </p>
-          </form>
-        </article>
       </div>
     </div>
   );

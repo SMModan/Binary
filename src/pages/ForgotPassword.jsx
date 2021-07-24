@@ -27,6 +27,49 @@ export default function ForgotPassword() {
     }
   }, [isForgotpasswordSuccess]);
   const { errors, touched } = formik;
+
+  return (
+    <div className="content wrapper fadeInDown custom-input">
+      <div id="formContent">
+        <h2 className="text-dark text-center my-4">Forgot Password?</h2>
+        <p className="text-dark">You can reset your password here.</p>
+
+        {/* <div className="fadeIn first">
+          <FontAwesomeIcon className="m-2" size="4x" icon={faUserCircle} />
+        </div> */}
+        <form
+          id="register-form"
+          role="form"
+          autocomplete="off"
+          className="form"
+          method="post"
+        >
+          <input
+            name="email"
+            placeholder="email address"
+            className="form-control"
+            type="email"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
+          {errors.email && touched.email && <div>{errors.email}</div>}
+
+          <input
+            type="submit"
+            className="fadeIn fourth"
+            value="Reset Password"
+            disabled={!(formik.isValid && formik.dirty)}
+            onClick={formik.handleSubmit}
+          />
+        </form>
+        {/* <hr/> */}
+        <p className="text-dark text-center mb-4">
+          Go Back to <Link to="/login">Log In</Link>{" "}
+        </p>
+      </div>
+    </div>
+  );
   return (
     <div className="container wrapper custom-input">
       <div className="panel panel-default" style={{ maxWidth: "400px" }}>

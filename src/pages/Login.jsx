@@ -66,7 +66,7 @@ export default function Login() {
           />
         </form>
         {/* <hr/> */}
-        <p className="text-secondary text-center">
+        <p className="text-dark text-center">
           or Register <Link to="/register">here</Link>{" "}
         </p>
         {/* <!-- Remind Passowrd --> */}
