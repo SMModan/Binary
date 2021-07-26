@@ -15,7 +15,7 @@ export default function SidebarAdminLayout(props) {
     showSidebar: false,
   });
   React.useEffect(() => {
-    const data = secureRoutes.find((item) => item.path === location.pathname);
+    const data = secureRoutes.find((item) => item.path === location.pathname); // set your path data in routing and custmize here
     if (data) {
       setCurrentPathData(data);
     }
@@ -78,7 +78,7 @@ export default function SidebarAdminLayout(props) {
 
   return (
     <div className="wrapper">
-      {currentPathData.showSidebar && (
+      {currentPathData.showSidebar && ( // set it from router
         <Sidebar
           routes={secureRoutes.filter((item) => item.isShowInSidebar)}
           logo={{
@@ -90,7 +90,7 @@ export default function SidebarAdminLayout(props) {
         />
       )}
       <div className="main-panel" ref={mainPanelRef}>
-        {currentPathData.showHeader && (
+        {currentPathData.showHeader && ( // set it from router
           <AdminNavbar
             brandText={getBrandText(location.pathname)}
             toggleSidebar={toggleSidebar}
