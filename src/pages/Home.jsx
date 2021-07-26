@@ -10,6 +10,7 @@ import {
 import Dashboard from "../components/Dashboard";
 import { useSelector } from "react-redux";
 import SidebarAdminLayout from "../components/SidebarAdminLayout";
+import '../assets/css/black-dashboard-react.css'
 
 
 function Home() {

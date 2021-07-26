@@ -1,8 +1,10 @@
+
 import {
   LOGIN,
   REGISTER,
   FORGOT_PASSWORD,
   LOGOUT,
+  VERIFY_OTP_ACTION,
 } from "../constants/action-types";
 
 const initialState = {
@@ -10,6 +12,7 @@ const initialState = {
   isLoggedin: !!localStorage.getItem("login"),
   isRegisterd: false,
   isForgotpasswordSuccess: false,
+  isOTPVerify:false
 };
 export default (state = initialState, { type, payload = {} }) => {
   switch (type) {
@@ -78,6 +81,11 @@ export default (state = initialState, { type, payload = {} }) => {
         ...payload,
         isForgotpasswordSuccess: false,
         loading: false,
+      };
+    case VERIFY_OTP_ACTION.VERIFY_OTP_ACTION_SUCCESS:
+      return {
+        ...state,isOTPVerify:true
+     
       };
     default:
       return state;

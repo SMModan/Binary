@@ -37,6 +37,7 @@ const loginSuccess = () => (dispatch) => {
   });
 };
 const loginError = () => (dispatch) => {
+  localStorage.setItem("login", "Success");
   dispatch({
     type: LOGIN.LOGIN_ERORR,
   });
@@ -50,16 +51,16 @@ export const register = (data) => (dispatch) => {
     //Company_logo:,
     Industry_ID,
     // Employee_size: Employee_size.toString(),
-    BR_No: "Test BR",
-    BR_Proof: "",
-    BR_Verified: "1",
-    BR_Verification_Complete_date: "2021-07-20 17:38:16",
-    Revenue_class: "9",
-    Revenue_source: "8",
-    Default_currency: "1",
-    Accounting_SW_status: "1",
-    Accounting_SW_type: "1",
-    Accounting_SW_ID: "Test",
+    // BR_No: "Test BR",
+    // BR_Proof: "",
+    // BR_Verified: "1",
+    // BR_Verification_Complete_date: "2021-07-20 17:38:16",
+    // Revenue_class: "9",
+    // Revenue_source: "8",
+    // Default_currency: "1",
+    // Accounting_SW_status: "1",
+    // Accounting_SW_type: "1",
+    // Accounting_SW_ID: "Test",
   };
   // axios
   //   .post("http://18.188.8.195:3100/v1/company/signUp", registerData)

@@ -42,7 +42,7 @@ export default function Login() {
             type="text"
             className="fadeIn second"
             name="email"
-            placeholder="login"
+            placeholder="Email Address"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.email}
@@ -52,7 +52,7 @@ export default function Login() {
             type="password"
             className="fadeIn third"
             name="password"
-            placeholder="password"
+            placeholder="Password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password}
