@@ -1,9 +1,11 @@
 import axios from "axios";
+import { saveToken } from "../../utils";
 import {
   FORGOT_PASSWORD_SERVICE,
   LOGIN_SERVICE,
   SIGNUP_SERVICE,
   VERIFY_OTP,
+  GET_PROFILE_SERVICE,
 } from "../../service/apiEndpoints";
 import { apiCall, METHOD } from "../../service/baseApiCall";
 import {
@@ -12,6 +14,7 @@ import {
   FORGOT_PASSWORD,
   LOGOUT,
   VERIFY_OTP_ACTION,
+  GET_PROFILE,
 } from "../constants/action-types";
 
 export const login = (data) => (dispatch) => {
@@ -30,14 +33,13 @@ const loginInit = (data) => (dispatch) => {
     {}
   );
 };
-const loginSuccess = () => (dispatch) => {
-  localStorage.setItem("login", "Success");
+const loginSuccess = (res) => (dispatch) => {
+  saveToken(res.data.auth.token);
   dispatch({
     type: LOGIN.LOGIN_SUCCESS,
   });
 };
 const loginError = () => (dispatch) => {
-  localStorage.setItem("login", "Success");
   dispatch({
     type: LOGIN.LOGIN_ERORR,
   });
@@ -130,8 +132,6 @@ const forgotPasswordError = () => (dispatch) => {
   });
 };
 
-
-
 export const verifyOtp = (data) => (dispatch) => {
   dispatch(verifyOtpInit(data));
 };
@@ -156,5 +156,32 @@ const verifyOtpSuccess = () => (dispatch) => {
 const verifyOtpError = () => (dispatch) => {
   dispatch({
     type: VERIFY_OTP_ACTION.VERIFY_OTP_ACTION_ERORR,
+  });
+};
+
+export const getProfile = (data) => (dispatch) => {
+  dispatch(getProfileInit(data));
+};
+const getProfileInit = (data) => (dispatch) => {
+  dispatch({
+    type: GET_PROFILE.GET_PROFILE_INITLIZATION,
+  });
+  apiCall(
+    GET_PROFILE_SERVICE,
+    data,
+    (res) => console.log(res), //dispatch(getProfileSuccess(res)),
+    (err) => console.log(err), //dispatch(getProfileError(err)),
+    METHOD.GET,
+    { addAuthrize: true }
+  );
+};
+const getProfileSuccess = () => (dispatch) => {
+  dispatch({
+    type: GET_PROFILE.GET_PROFILE_SUCCESS,
+  });
+};
+const getProfileError = () => (dispatch) => {
+  dispatch({
+    type: GET_PROFILE.GET_PROFILE_ERORR,
   });
 };

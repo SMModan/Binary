@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminNavbar from "./Navbars/AdminNavbar";
 import Sidebar from "./Sidebar/Sidebar";
 import PerfectScrollbar from "perfect-scrollbar";
 import { useLocation } from "react-router";
-import { routes } from "../routes/routeConstants";
+import { secureRoutes } from "../routes/routeConstants";
 import logo from "../assets/img/react-logo.png";
 
 var ps;
 export default function SidebarAdminLayout(props) {
   const location = useLocation();
   const mainPanelRef = React.useRef(null);
+  const [currentPathData, setCurrentPathData] = useState({
+    showHeader: false,
+    showSidebar: false,
+  });
+  React.useEffect(() => {
+    const data = secureRoutes.find((item) => item.path === location.pathname);
+    if (data) {
+      setCurrentPathData(data);
+    }
+  }, [location.pathname, secureRoutes]);
   const [sidebarOpened, setsidebarOpened] = React.useState(
     document.documentElement.className.indexOf("nav-open") !== -1
   );
@@ -54,30 +64,39 @@ export default function SidebarAdminLayout(props) {
   };
 
   const getBrandText = (path) => {
-    for (let i = 0; i < routes.length; i++) {
-      if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
-        return routes[i].name;
+    for (let i = 0; i < secureRoutes.length; i++) {
+      if (
+        location.pathname.indexOf(
+          secureRoutes[i].layout + secureRoutes[i].path
+        ) !== -1
+      ) {
+        return secureRoutes[i].name;
       }
     }
     return "Brand";
   };
+
   return (
     <div className="wrapper">
-      <Sidebar
-        routes={routes}
-        logo={{
-          outterLink: "#",
-          text: "Binary",
-          imgSrc: logo,
-        }}
-        toggleSidebar={toggleSidebar}
-      />
-      <div className="main-panel" ref={mainPanelRef}>
-        <AdminNavbar
-          brandText={getBrandText(location.pathname)}
+      {currentPathData.showSidebar && (
+        <Sidebar
+          routes={secureRoutes.filter((item) => item.isShowInSidebar)}
+          logo={{
+            outterLink: "#",
+            text: "Binary",
+            imgSrc: logo,
+          }}
           toggleSidebar={toggleSidebar}
-          sidebarOpened={sidebarOpened}
         />
+      )}
+      <div className="main-panel" ref={mainPanelRef}>
+        {currentPathData.showHeader && (
+          <AdminNavbar
+            brandText={getBrandText(location.pathname)}
+            toggleSidebar={toggleSidebar}
+            sidebarOpened={sidebarOpened}
+          />
+        )}
         {props.children}
       </div>
     </div>

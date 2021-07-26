@@ -12,15 +12,15 @@ import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <ThemeContextWrapper>
         <BackgroundColorWrapper>
           <App />
         </BackgroundColorWrapper>
       </ThemeContextWrapper>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 

@@ -39,9 +39,18 @@ import {
   ModalHeader,
 } from "reactstrap";
 import { logout } from "../../redux/action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 function AdminNavbar(props) {
+  const { push } = useHistory();
+  const isLoggedin = useSelector((state) => state.userDataReducer.isLoggedin);
+
+  React.useEffect(() => {
+    if (!isLoggedin) {
+      push("/login");
+    }
+  }, [isLoggedin]);
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");

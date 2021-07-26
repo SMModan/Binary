@@ -1,3 +1,4 @@
+import SidebarAdminLayout from "../components/SidebarAdminLayout";
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -6,19 +7,20 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
-import { routes } from "./routeConstants";
+import { publicRoutes, secureRoutes } from "./routeConstants";
 
 export default function Routes() {
   return (
-    <Router>
-      {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-      <Switch>
-        {routes.map((item, index) => (
+    <Switch>
+      {publicRoutes.map((item, index) => (
+        <Route key={index} {...item} />
+      ))}
+      <SidebarAdminLayout>
+        {secureRoutes.map((item, index) => (
           <Route key={index} {...item} />
         ))}
-        <Route render={() => <Redirect to="/login" />} />
-      </Switch>
-    </Router>
+      </SidebarAdminLayout>
+      <Route render={() => <Redirect to="/login" />} />
+    </Switch>
   );
 }

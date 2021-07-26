@@ -13639,3 +13639,10 @@ select.form-control option {
   color: #888; }
 
 /*# sourceMappingURL=black-dashboard-react.css.map */
+
+/* custom css override */
+
+.main-panel > .custom-padding {
+  padding: 78px 200px 30px 80px;
+  min-height: calc(100vh - 70px);
+}

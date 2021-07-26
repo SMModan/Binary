@@ -2,7 +2,7 @@ import SidebarAdminLayout from "../components/SidebarAdminLayout";
 import React from "react";
 
 export default function UserList() {
-  return (<SidebarAdminLayout>
+  return (
     <div class="container mt-5 mb-3 pt-5">
       <div class="row">
         <div class="col-md-4">
@@ -138,5 +138,5 @@ export default function UserList() {
         </div>
       </div>
     </div>
-    </SidebarAdminLayout>  );
+  );
 }

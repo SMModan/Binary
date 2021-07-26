@@ -1,4 +1,4 @@
-
+import { getToken } from "../../utils";
 import {
   LOGIN,
   REGISTER,
@@ -9,10 +9,10 @@ import {
 
 const initialState = {
   loading: false,
-  isLoggedin: !!localStorage.getItem("login"),
+  isLoggedin: !!getToken(),
   isRegisterd: false,
   isForgotpasswordSuccess: false,
-  isOTPVerify:false
+  isOTPVerify: false,
 };
 export default (state = initialState, { type, payload = {} }) => {
   switch (type) {
@@ -84,8 +84,8 @@ export default (state = initialState, { type, payload = {} }) => {
       };
     case VERIFY_OTP_ACTION.VERIFY_OTP_ACTION_SUCCESS:
       return {
-        ...state,isOTPVerify:true
-     
+        ...state,
+        isOTPVerify: true,
       };
     default:
       return state;
