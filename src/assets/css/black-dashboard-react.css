@@ -13646,3 +13646,25 @@ select.form-control option {
   padding: 78px 200px 30px 80px;
   min-height: calc(100vh - 70px);
 }
+
+@keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+.spin::before {
+  animation: 1.5s linear infinite spinner;
+  animation-play-state: inherit;
+  border: solid 5px #cfd0d1;
+  border-bottom-color: #c97df7;
+  border-radius: 50%;
+  content: "";
+  height: 65px;
+  width: 65px;
+  position: absolute;
+  top: 9%;
+  opacity: 0.5;
+}

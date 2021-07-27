@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { getAPIHeader } from "../utils";
 import axios from "./axiosConfig";
 
@@ -15,45 +16,56 @@ export const apiCall = (
   onSuccess,
   onFailure,
   method = METHOD.GET,
-  DyanamicConfig = {
+  dyanamicConfig = {
     addAuthrize: false,
+    showErrorToast: true,
     customParams: {},
   }
 ) => {
-  console.log(endpoint, params, onSuccess, onFailure, method, DyanamicConfig);
+  console.log(endpoint, params, onSuccess, onFailure, method, dyanamicConfig);
   let request = {};
   switch (method) {
     case METHOD.POST:
       request = axios.post(
         endpoint,
         params,
-        DyanamicConfig.addAuthrize ? getAPIHeader() : DyanamicConfig.customParams
+        dyanamicConfig.addAuthrize
+          ? getAPIHeader()
+          : dyanamicConfig.customParams
       );
       break;
     case METHOD.GET:
       request = axios.get(
         endpoint,
-        DyanamicConfig.addAuthrize ? getAPIHeader() : DyanamicConfig.customParams
+        dyanamicConfig.addAuthrize
+          ? getAPIHeader()
+          : dyanamicConfig.customParams
       );
       break;
     case METHOD.DELETE:
       request = axios.delete(
         endpoint,
-        DyanamicConfig.addAuthrize ? getAPIHeader() : DyanamicConfig.customParams
+        dyanamicConfig.addAuthrize
+          ? getAPIHeader()
+          : dyanamicConfig.customParams
       );
       break;
     case METHOD.PUT:
       request = axios.put(
         endpoint,
         params,
-        DyanamicConfig.addAuthrize ? getAPIHeader() : DyanamicConfig.customParams
+        dyanamicConfig.addAuthrize
+          ? getAPIHeader()
+          : dyanamicConfig.customParams
       );
       break;
     case METHOD.PATCH:
       request = axios.patch(
         endpoint,
         params,
-        DyanamicConfig.addAuthrize ? getAPIHeader() : DyanamicConfig.customParams
+        dyanamicConfig.addAuthrize
+          ? getAPIHeader()
+          : dyanamicConfig.customParams
       );
       break;
   }
@@ -67,11 +79,19 @@ export const apiCall = (
       ) {
         onSuccess(response.data);
       } else {
+        console.log(response.data)
         onFailure("Something went wrong");
       }
     })
     .catch((error) => {
-      console.log(error);
+      if (
+        dyanamicConfig.showErrorToast &&
+        error.response.data &&
+        error.response.data.error &&
+        error.response.data.success === 0
+      ) {
+        toast.error(error.response.data.error);
+      }
       if (error && error.response) {
         switch (error.response.status) {
           case 401:

@@ -11,6 +11,7 @@ export default function ForgotPassword() {
   const isForgotpasswordSuccess = useSelector(
     (state) => state.userDataReducer.isForgotpasswordSuccess
   );
+  const loading = useSelector((state) => state.userDataReducer.loading);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -59,7 +60,7 @@ export default function ForgotPassword() {
             type="submit"
             className="fadeIn fourth"
             value="Reset Password"
-            disabled={!(formik.isValid && formik.dirty)}
+            disabled={!(formik.isValid && formik.dirty) || loading || isForgotpasswordSuccess}
             onClick={formik.handleSubmit}
           />
         </form>

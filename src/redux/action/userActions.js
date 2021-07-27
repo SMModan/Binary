@@ -1,11 +1,12 @@
 import axios from "axios";
-import { saveToken } from "../../utils";
+import { removeToken, saveToken } from "../../utils";
 import {
   FORGOT_PASSWORD_SERVICE,
   LOGIN_SERVICE,
   SIGNUP_SERVICE,
   VERIFY_OTP,
   GET_PROFILE_SERVICE,
+  LOGOUT_SERVICE,
 } from "../../service/apiEndpoints";
 import { apiCall, METHOD } from "../../service/baseApiCall";
 import {
@@ -100,11 +101,37 @@ const registerError = () => (dispatch) => {
     type: REGISTER.REGISTER_ERORR,
   });
 };
+
 export const logout = () => (dispatch) => {
+  dispatch(logoutInit());
+};
+
+const logoutInit = () => (dispatch) => {
   dispatch({
     type: LOGOUT.LOGOUT_INITLIZATION,
   });
+  apiCall(
+    LOGOUT_SERVICE,
+    {},
+    (res) => dispatch(logoutSuccess(res)),
+    (err) => dispatch(logoutError(err)),
+    METHOD.GET,
+    { addAuthrize: true, showErrorToast: false }
+  );
 };
+const logoutSuccess = () => (dispatch) => {
+  removeToken()
+  dispatch({
+    type: LOGOUT.LOGOUT_SUCCESS,
+  });
+};
+const logoutError = () => (dispatch) => {
+  removeToken()
+  dispatch({
+    type: LOGOUT.LOGOUT_ERORR,
+  });
+};
+
 export const forgotPassword = (data) => (dispatch) => {
   dispatch(forgotPasswordInit(data));
 };

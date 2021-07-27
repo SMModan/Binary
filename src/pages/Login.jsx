@@ -11,6 +11,7 @@ import { LoginSchema } from "../validationScrema/user";
 export default function Login() {
   const { push } = useHistory();
   const isLoggedin = useSelector((state) => state.userDataReducer.isLoggedin);
+  const loading = useSelector((state) => state.userDataReducer.loading);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -62,8 +63,10 @@ export default function Login() {
             type="submit"
             className="fadeIn fourth"
             value="Log In"
+            disabled={loading || isLoggedin}
             onClick={formik.handleSubmit}
           />
+          {loading && <div class="spin" role="status" />}
         </form>
         {/* <hr/> */}
         <p className="text-dark text-center">

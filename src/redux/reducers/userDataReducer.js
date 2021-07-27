@@ -34,8 +34,10 @@ export default (state = initialState, { type, payload = {} }) => {
         ...state,
         ...payload,
         isLoggedin: false,
+        loading: false,
       };
-    case LOGOUT.LOGOUT_INITLIZATION:
+    case LOGOUT.LOGOUT_SUCCESS:
+    case LOGOUT.LOGOUT_ERORR:
       return {
         ...state,
         ...payload,

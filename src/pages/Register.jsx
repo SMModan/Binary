@@ -17,7 +17,8 @@ export default function Register() {
   useEffect(() => {
     getIndustries(setIndustryOptions);
   }, []);
-
+  
+  const loading = useSelector((state) => state.userDataReducer.loading);
   const isRegisterd = useSelector((state) => state.userDataReducer.isRegisterd);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -157,7 +158,7 @@ export default function Register() {
             type="submit"
             className="fadeIn fourth"
             value="Create Account"
-            disabled={!(formik.isValid && formik.dirty)}
+            disabled={!(formik.isValid && formik.dirty) || loading || isRegisterd}
             onClick={formik.handleSubmit}
           />
         </form>

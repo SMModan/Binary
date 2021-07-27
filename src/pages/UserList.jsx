@@ -3,7 +3,7 @@ import React from "react";
 
 export default function UserList() {
   return (
-    <div class="container mt-5 mb-3 pt-5">
+    <div class="content mt-5 mb-3 pt-5">
       <div class="row">
         <div class="col-md-4">
           <div class="card p-3 mb-2">

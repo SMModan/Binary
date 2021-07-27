@@ -10,12 +10,14 @@ import './assets/css/black-dashboard-react.css'
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";
+import ToastMessage from "./components/ToastMessage";
 
 ReactDOM.render(
   // <React.StrictMode>
     <Provider store={store}>
       <ThemeContextWrapper>
         <BackgroundColorWrapper>
+          <ToastMessage />
           <App />
         </BackgroundColorWrapper>
       </ThemeContextWrapper>
