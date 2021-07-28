@@ -196,19 +196,26 @@ const getProfileInit = (data) => (dispatch) => {
   apiCall(
     GET_PROFILE_SERVICE,
     data,
-    (res) => console.log(res), //dispatch(getProfileSuccess(res)),
-    (err) => console.log(err), //dispatch(getProfileError(err)),
+    (res) => dispatch(getProfileSuccess(res.data.company)),
+    (err) => dispatch(getProfileError(err)),
     METHOD.GET,
     { addAuthrize: true }
   );
 };
-const getProfileSuccess = () => (dispatch) => {
+const getProfileSuccess = (payload) => (dispatch) => {
   dispatch({
     type: GET_PROFILE.GET_PROFILE_SUCCESS,
+    payload
   });
 };
 const getProfileError = () => (dispatch) => {
   dispatch({
     type: GET_PROFILE.GET_PROFILE_ERORR,
+  });
+};
+export const updateUserProfileForm = (payload) => (dispatch) => {
+  dispatch({
+    type: GET_PROFILE.UPDATE_USER_FORM_DATA,
+    payload
   });
 };

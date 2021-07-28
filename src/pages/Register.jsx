@@ -13,7 +13,7 @@ import { getIndustries } from "../service/APIcalls";
 
 export default function Register() {
   const { push } = useHistory();
-  const [industryOptions, setIndustryOptions] = useState();
+  const [industryOptions, setIndustryOptions] = useState([]);
   useEffect(() => {
     getIndustries(setIndustryOptions);
   }, []);
