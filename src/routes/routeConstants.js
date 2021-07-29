@@ -5,6 +5,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import VerifyOTP from "../pages/VerifyOTP";
 import UserProfile from "../pages/UserProfile";
+import { Redirect } from "react-router";
+import React from 'react'
 
 export const publicRoutes = [
   {
@@ -47,4 +49,8 @@ export const secureRoutes = [
     showHeader: true,
     showSidebar: false,
   },
+  // {
+  //   path: "/",
+  //   component: () => <Redirect to="/home" />, // put this route at very last, else it will not accept routse we write below.
+  // },
 ];
