@@ -12,10 +12,13 @@ const getProductsInit = () => (dispacth) => {
   });
   apiCall(
     PRODUCT_LIST,
-    {},
-    (res) => console.log(res),
-    (err) => console.log(err),
-    METHOD.GET,
+    {
+      start: 0,
+      limit: 10,
+    },
+    (res) => dispacth(getProductsSuccess(res.data.list)),
+    (err) => dispacth(getProductsError(err)),
+    METHOD.POST,
     {
       addAuthrize: true,
     }
@@ -27,7 +30,7 @@ const getProductsSuccess = (payload) => (dispacth) => {
     payload,
   });
 };
-const getProductsError = () => (dispacth) => {
+const getProductsError = (payload) => (dispacth) => {
   dispacth({
     type: GET_PRODUCT_LIST.GET_PRODUCT_LIST_ERORR,
     payload,

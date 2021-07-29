@@ -1,7 +1,13 @@
 import SidebarAdminLayout from "../components/SidebarAdminLayout";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getProducts } from "../redux/action/ProductsAction";
 
 export default function UserList() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProducts())
+  }, [])
   return (
     <div class="content mt-5 mb-3 pt-5">
       <div class="row">

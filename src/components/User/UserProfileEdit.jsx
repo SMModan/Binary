@@ -27,7 +27,7 @@ export default function UserProfileEdit() {
     initialValues: {
       Company_name: user.Company_name,
       Industry_ID: user.Industry_ID,
-      Email: user.Email,
+      email: user.Email,
     },
     // validationSchema: SignupSchema,
     onSubmit: (values) => {
