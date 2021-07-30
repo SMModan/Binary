@@ -22,7 +22,7 @@ export const apiCall = (
     customParams: {},
   }
 ) => {
-  console.log(endpoint, params, onSuccess, onFailure, method, dyanamicConfig);
+  console.log(endpoint, params, "onSuccess", "onFailure", method, dyanamicConfig);
   let request = {};
   switch (method) {
     case METHOD.POST:

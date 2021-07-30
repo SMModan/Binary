@@ -1,6 +1,10 @@
 import { apiCall, METHOD } from "../../service/baseApiCall";
-import { PRODUCT_LIST } from "../../service/apiEndpoints";
-import { GET_PRODUCT_LIST } from "../constants/action-types";
+import { PRODUCT_CREATE, PRODUCT_LIST } from "../../service/apiEndpoints";
+import {
+  GET_PRODUCT_LIST,
+  CREATE_PRODUCT_ACTION,
+} from "../constants/action-types";
+import { toast } from "react-toastify";
 
 export const getProducts = (payload) => (dispacth) =>
   dispacth(getProductsInit());
@@ -33,6 +37,38 @@ const getProductsSuccess = (payload) => (dispacth) => {
 const getProductsError = (payload) => (dispacth) => {
   dispacth({
     type: GET_PRODUCT_LIST.GET_PRODUCT_LIST_ERORR,
+    payload,
+  });
+};
+
+export const createProduct = (data) => (dispacth) =>
+  dispacth(createProductInit(data));
+
+const createProductInit = (data) => (dispacth) => {
+  dispacth({
+    type: CREATE_PRODUCT_ACTION.CREATE_PRODUCT_ACTION_INITLIZATION,
+  });
+  apiCall(
+    PRODUCT_CREATE,
+    data,
+    (res) => dispacth(createProductSuccess(res.data)),
+    (err) => dispacth(createProductError(err)),
+    METHOD.POST,
+    {
+      addAuthrize: true,
+    }
+  );
+};
+const createProductSuccess = (payload) => (dispacth) => {
+  toast.success(payload.message);
+  dispacth({
+    type: CREATE_PRODUCT_ACTION.CREATE_PRODUCT_ACTION_SUCCESS,
+    // payload,
+  });
+};
+const createProductError = (payload) => (dispacth) => {
+  dispacth({
+    type: CREATE_PRODUCT_ACTION.CREATE_PRODUCT_ACTION_ERORR,
     payload,
   });
 };

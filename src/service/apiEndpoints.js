@@ -10,3 +10,4 @@ export const LOGOUT_SERVICE = "/company/logout";
 
 // PRODUCTS API END POINTS
 export const PRODUCT_LIST = "/product/list";
+export const PRODUCT_CREATE = "/product/create";

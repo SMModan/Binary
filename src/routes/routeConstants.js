@@ -6,7 +6,8 @@ import Register from "../pages/Register";
 import VerifyOTP from "../pages/VerifyOTP";
 import UserProfile from "../pages/UserProfile";
 import { Redirect } from "react-router";
-import React from 'react'
+import React from "react";
+import CreateProduct from "../pages/CreateProduct";
 
 export const publicRoutes = [
   {
@@ -36,9 +37,17 @@ export const secureRoutes = [
     showSidebar: true,
   },
   {
-    path: "/manage-jobs",
+    path: "/create-product",
+    component: CreateProduct,
+    name: "Create Product",
+    isShowInSidebar: true,
+    showHeader: true,
+    showSidebar: true,
+  },
+  {
+    path: "/products",
     component: UserList,
-    name: "Manage Jobs",
+    name: "Product List",
     isShowInSidebar: true,
     showHeader: true,
     showSidebar: true,
