@@ -36,7 +36,7 @@ export default function Login() {
         <div className="fadeIn first">
           <FontAwesomeIcon className="m-2" size="4x" icon={faUserCircle} />
         </div>
-
+      
         {/* <!-- Login Form --> */}
         <form>
           <input
@@ -48,7 +48,14 @@ export default function Login() {
             onBlur={formik.handleBlur}
             value={formik.values.email}
           />
-          {errors.email && touched.email && <span className="text-danger float-left " style={{marginLeft:'40px'}}>{errors.email}</span>}
+          {errors.email && touched.email && (
+            <span
+              className="text-danger float-left "
+              style={{ marginLeft: "40px" }}
+            >
+              {errors.email}
+            </span>
+          )}
           <input
             type="password"
             className="fadeIn third"
@@ -58,7 +65,14 @@ export default function Login() {
             onBlur={formik.handleBlur}
             value={formik.values.password}
           />
-          {errors.password && touched.password && <span className="text-danger float-left " style={{marginLeft:'40px'}}>{errors.password}</span>}
+          {errors.password && touched.password && (
+            <span
+              className="text-danger float-left "
+              style={{ marginLeft: "40px" }}
+            >
+              {errors.password}
+            </span>
+          )}
           <input
             type="submit"
             className="fadeIn fourth"
