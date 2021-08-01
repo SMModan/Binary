@@ -31,7 +31,6 @@ const loginInit = (data) => (dispatch) => {
     (res) => dispatch(loginSuccess(res)),
     (err) => dispatch(loginError(err)),
     METHOD.POST,
-    {}
   );
 };
 const loginSuccess = (res) => (dispatch) => {
