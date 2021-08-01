@@ -32,11 +32,11 @@ const SignupSchema = Yup.object().shape({
     .required("Required"),
 });
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
+  email: Yup.string().email("Email is invalid").required("Email is Required"),
   password: Yup.string().required("Password is required"),
 });
 
 const ForgotPasswordSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
+  email: Yup.string().email("Email is invalid").required("Email is Required"),
 });
 export { SignupSchema, LoginSchema, ForgotPasswordSchema };
