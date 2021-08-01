@@ -19,6 +19,7 @@ import { EDIT_PROFILE } from "../../service/apiEndpoints";
 import { updateUserProfileForm } from "../../redux/action";
 import { useFormik } from "formik";
 import { apiCall, METHOD } from "../../service";
+import { toast } from "react-toastify";
 
 export default function UserProfileEdit() {
   const [industryOptions, setIndustryOptions] = useState([]);
@@ -40,7 +41,7 @@ export default function UserProfileEdit() {
     apiCall(
       EDIT_PROFILE,
       values,
-      (res) => console.log(res),
+      (res) => toast.success(res.data.message),
       (err) => console.log(err),
       METHOD.POST,
       {
@@ -62,7 +63,15 @@ export default function UserProfileEdit() {
       <CardBody>
         <Form>
           <Row>
-            <Col className="pr-md-1" md="5">
+            <Col className="pl-md-1" md="4">
+              <FormGroup>
+                <label htmlFor="exampleInputEmail1">
+                  Email address (disabled)
+                </label>
+                <Input disabled placeholder={user.Email} type="email" />
+              </FormGroup>
+            </Col>
+            <Col className="pr-md-1" md="4">
               <FormGroup>
                 <label>Company</label>
                 <Input
@@ -74,30 +83,9 @@ export default function UserProfileEdit() {
                 />
               </FormGroup>
             </Col>
-            {/* <Col className="px-md-1" md="3">
+            <Col md="4">
               <FormGroup>
-                <label>Username</label>
-                <Input
-                  defaultValue="michael23"
-                  placeholder="Username"
-                  type="text"
-                />
-              </FormGroup>
-            </Col> */}
-            <Col className="pl-md-1" md="4">
-              <FormGroup>
-                <label htmlFor="exampleInputEmail1">
-                  Email address (disabled)
-                </label>
-                <Input disabled placeholder={user.Email} type="email" />
-              </FormGroup>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col md="8">
-              <FormGroup>
-                <label>About Me</label>
+                <label>Industry</label>
                 <div>
                   <Select
                     placeholder="Industry"
@@ -141,6 +129,17 @@ export default function UserProfileEdit() {
                 </div>
               </FormGroup>
             </Col>
+
+            {/* <Col className="px-md-1" md="3">
+              <FormGroup>
+                <label>Username</label>
+                <Input
+                  defaultValue="michael23"
+                  placeholder="Username"
+                  type="text"
+                />
+              </FormGroup>
+            </Col> */}
           </Row>
 
           {/* <Row>

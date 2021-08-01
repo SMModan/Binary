@@ -1,5 +1,9 @@
 import { apiCall, METHOD } from "../../service/baseApiCall";
-import { PRODUCT_CREATE, PRODUCT_LIST } from "../../service/apiEndpoints";
+import {
+  PRODUCT_CREATE,
+  PRODUCT_LIST,
+  PRODUCT_EDIT,
+} from "../../service/apiEndpoints";
 import {
   GET_PRODUCT_LIST,
   CREATE_PRODUCT_ACTION,
@@ -41,19 +45,25 @@ const getProductsError = (payload) => (dispacth) => {
   });
 };
 
-export const createProduct = (data) => (dispacth) =>
-  dispacth(createProductInit(data));
+export const createProduct = (data, isEdit = 0, setModal) => (dispacth) =>
+  dispacth(createProductInit(data, isEdit, setModal));
 
-const createProductInit = (data) => (dispacth) => {
+const createProductInit = (data, isEdit, setModal) => (dispacth) => {
   dispacth({
     type: CREATE_PRODUCT_ACTION.CREATE_PRODUCT_ACTION_INITLIZATION,
   });
   apiCall(
-    PRODUCT_CREATE,
+    isEdit ? PRODUCT_EDIT(isEdit) : PRODUCT_CREATE,
     data,
-    (res) => dispacth(createProductSuccess(res.data)),
-    (err) => dispacth(createProductError(err)),
-    METHOD.POST,
+    (res) => {
+      dispacth(createProductSuccess(res.data));
+      setModal(false);
+    },
+    (err) => {
+      dispacth(createProductError(err));
+      setModal(false)
+    },
+    isEdit ? METHOD.PATCH : METHOD.POST,
     {
       addAuthrize: true,
     }

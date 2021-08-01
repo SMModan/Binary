@@ -8,15 +8,31 @@ import { CreateProductSchema } from "../../validationScrema/product";
 import EditProduct from "./EditProduct";
 
 const EditProductModal = (props) => {
-  const { buttonLabel, className, modal, setModal, product } = props;
+  const {
+    buttonLabel,
+    className,
+    modal,
+    setModal,
+    product,
+    loadingProduct,
+    setLoadingProduct,
+  } = props;
 
   const toggle = () => setModal((prev) => !prev);
 
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>Edit Product</ModalHeader>
-        <EditProduct product={product} />
+        <ModalHeader toggle={toggle}>
+          {`${product.id ? "Edit" : "Create"}`} Product
+        </ModalHeader>
+        <EditProduct
+          isCreateProdct={!product.id}
+          product={product}
+          setModal={setModal}
+          setLoadingProduct={setLoadingProduct}
+          loadingProduct={loadingProduct}
+        />
       </Modal>
     </div>
   );

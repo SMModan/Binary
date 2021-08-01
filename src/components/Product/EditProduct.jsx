@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -19,19 +19,25 @@ import { CreateProductSchema } from "../../validationScrema/product";
 import { createProduct, getProducts } from "../../redux/action";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function EditProduct({ product = {} }) {
+export default function EditProduct({
+  product = {},
+  setModal,
+  isCreateProdct,
+  loadingProduct,
+  setLoadingProduct,
+}) {
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
-      title: "", //user.Company_name,
-      ...product,
+      title: product.title,
     },
     validationSchema: CreateProductSchema,
     onSubmit: (values) => {
-      console.log(values);
-      //   dispatch(createProduct(values));
-      //   formik.resetForm();
+      // console.log(values);
+      setLoadingProduct(true);
+      dispatch(createProduct(values, product.id || 0, setModal));
+      // formik.resetForm();
     },
     enableReinitialize: true,
   });
@@ -52,9 +58,13 @@ export default function EditProduct({ product = {} }) {
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={formik.handleSubmit}>
-          Save
-        </Button>
+        {loadingProduct ? (
+          <Button color="primary">Loading..</Button>
+        ) : (
+          <Button color="primary" onClick={formik.handleSubmit}>
+            {isCreateProdct ? "Create" : "Save"}
+          </Button>
+        )}
       </ModalFooter>
     </React.Fragment>
   );

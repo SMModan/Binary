@@ -8,6 +8,7 @@ import UserProfile from "../pages/UserProfile";
 import { Redirect } from "react-router";
 import React from "react";
 import CreateProduct from "../pages/CreateProduct";
+import ProductList from "../pages/ProductList";
 
 export const publicRoutes = [
   {
@@ -36,17 +37,17 @@ export const secureRoutes = [
     showHeader: true,
     showSidebar: true,
   },
-  {
-    path: "/create-product",
-    component: CreateProduct,
-    name: "Create Product",
-    isShowInSidebar: true,
-    showHeader: true,
-    showSidebar: true,
-  },
+  // {
+  //   path: "/create-product",
+  //   component: CreateProduct,
+  //   name: "Create Product",
+  //   isShowInSidebar: true,
+  //   showHeader: true,
+  //   showSidebar: true,
+  // },
   {
     path: "/products",
-    component: UserList,
+    component: ProductList,
     name: "Product List",
     isShowInSidebar: true,
     showHeader: true,
