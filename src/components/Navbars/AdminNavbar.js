@@ -120,7 +120,7 @@ function AdminNavbar(props) {
                   <span className="d-lg-none d-md-block">Search</span>
                 </Button>
               </InputGroup>
-              <UncontrolledDropdown nav>
+              {/* <UncontrolledDropdown nav>
                 <DropdownToggle
                   caret
                   color="default"
@@ -159,6 +159,7 @@ function AdminNavbar(props) {
                   </NavLink>
                 </DropdownMenu>
               </UncontrolledDropdown>
+          */}
               <UncontrolledDropdown nav>
                 <DropdownToggle
                   caret
