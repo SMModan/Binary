@@ -62,7 +62,7 @@ export default function Register() {
             value={formik.values.Company_name}
           />
           {errors.Company_name && touched.Company_name && (
-            <div>{errors.Company_name}</div>
+            <span className="text-danger float-left " style={{marginLeft:'40px'}}>{errors.Company_name}</span>
           )}
 
           {/* <input
@@ -86,7 +86,9 @@ export default function Register() {
             onChange={formik.handleChange}
             value={formik.values.email}
           />
-          {errors.email && touched.email && <div>{errors.email}</div>}
+            
+          {errors.email && touched.email && 
+          <span className="text-danger float-left " style={{marginLeft:'40px'}}>{errors.email}</span>}
           <input
             name="password"
             className="form-control"
@@ -96,7 +98,9 @@ export default function Register() {
             onChange={formik.handleChange}
             value={formik.values.password}
           />
-          {errors.password && touched.password && <div>{errors.password}</div>}
+          {errors.password && touched.password && 
+          <span className="text-danger float-left " style={{marginLeft:'40px'}}>{errors.password}</span>
+          }
           <input
             name="passwordConfirmation"
             className="form-control"
@@ -107,7 +111,7 @@ export default function Register() {
             value={formik.values.passwordConfirmation}
           />
           {errors.passwordConfirmation && touched.passwordConfirmation && (
-            <div>{errors.passwordConfirmation}</div>
+            <span className="text-danger float-left " style={{marginLeft:'40px'}}>{errors.passwordConfirmation}</span>
           )}
           <Select
             placeholder="Industry"
@@ -152,7 +156,7 @@ export default function Register() {
             // noOptionsMessage={() => "Industry appears here"}
           />
           {errors.Industry_ID && touched.Industry_ID && (
-            <div>{errors.Industry_ID}</div>
+            <span className="text-danger float-left " style={{marginLeft:'40px'}}>{errors.Industry_ID}</span>
           )}
           <input
             type="submit"

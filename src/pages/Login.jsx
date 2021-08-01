@@ -48,7 +48,7 @@ export default function Login() {
             onBlur={formik.handleBlur}
             value={formik.values.email}
           />
-          {errors.email && touched.email && <div>{errors.email}</div>}
+          {errors.email && touched.email && <span className="text-danger float-left " style={{marginLeft:'40px'}}>{errors.email}</span>}
           <input
             type="password"
             className="fadeIn third"
@@ -58,7 +58,7 @@ export default function Login() {
             onBlur={formik.handleBlur}
             value={formik.values.password}
           />
-          {errors.password && touched.password && <div>{errors.password}</div>}
+          {errors.password && touched.password && <span className="text-danger float-left " style={{marginLeft:'40px'}}>{errors.password}</span>}
           <input
             type="submit"
             className="fadeIn fourth"
@@ -66,7 +66,7 @@ export default function Login() {
             disabled={loading || isLoggedin}
             onClick={formik.handleSubmit}
           />
-          {loading && <div class="spin" role="status" />}
+          {loading && <div className="cover-spin" role="status" />}
         </form>
         {/* <hr/> */}
         <p className="text-dark text-center">
