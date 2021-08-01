@@ -1,7 +1,7 @@
 import { Table } from "reactstrap";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../redux/action/ProductsAction";
+import { deleteProduct, getProducts } from "../redux/action/ProductsAction";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import EditProductModal from "../components/Product/EditProductModal";
@@ -15,11 +15,15 @@ export default function ProductList() {
   const [product, setProduct] = useState({});
   useEffect(() => {
     if (!modal) {
-      dispatch(getProducts());
-      setProduct({});
       setLoadingProduct(false);
     }
   }, [modal]);
+  useEffect(() => {
+    if (!loadingProduct) {
+      dispatch(getProducts());
+      setProduct({});
+    }
+  }, [loadingProduct]);
   useEffect(() => {
     dispatch(getProducts());
   }, []);
@@ -63,6 +67,17 @@ export default function ProductList() {
                 <td className="text-center">
                   {" "}
                   <FontAwesomeIcon
+                    onClick={() => {
+                      setLoadingProduct(true);
+                      dispatch(
+                        deleteProduct(
+                          undefined,
+                          item.id,
+                          setLoadingProduct,
+                          true
+                        )
+                      );
+                    }}
                     className="cursor-pointer"
                     size="1x"
                     icon={faTrash}

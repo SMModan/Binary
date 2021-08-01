@@ -2,7 +2,7 @@ import { apiCall, METHOD } from "../../service/baseApiCall";
 import {
   PRODUCT_CREATE,
   PRODUCT_LIST,
-  PRODUCT_EDIT,
+  PRODUCT_UD,
 } from "../../service/apiEndpoints";
 import {
   GET_PRODUCT_LIST,
@@ -45,15 +45,19 @@ const getProductsError = (payload) => (dispacth) => {
   });
 };
 
+export const deleteProduct = (data, isEdit = 0, setLoading, isDelete = false) => (
+  dispacth
+) => dispacth(createProductInit(data, isEdit, setLoading, isDelete));
+
 export const createProduct = (data, isEdit = 0, setModal) => (dispacth) =>
   dispacth(createProductInit(data, isEdit, setModal));
 
-const createProductInit = (data, isEdit, setModal) => (dispacth) => {
+const createProductInit = (data, isEdit, setModal, isDelete) => (dispacth) => {
   dispacth({
     type: CREATE_PRODUCT_ACTION.CREATE_PRODUCT_ACTION_INITLIZATION,
   });
   apiCall(
-    isEdit ? PRODUCT_EDIT(isEdit) : PRODUCT_CREATE,
+    isEdit ? PRODUCT_UD(isEdit) : PRODUCT_CREATE,
     data,
     (res) => {
       dispacth(createProductSuccess(res.data));
@@ -61,9 +65,9 @@ const createProductInit = (data, isEdit, setModal) => (dispacth) => {
     },
     (err) => {
       dispacth(createProductError(err));
-      setModal(false)
+      setModal(false);
     },
-    isEdit ? METHOD.PATCH : METHOD.POST,
+    isDelete ? METHOD.DELETE : isEdit ? METHOD.PATCH : METHOD.POST,
     {
       addAuthrize: true,
     }
