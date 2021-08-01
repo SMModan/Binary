@@ -10,3 +10,11 @@ export const getAPIHeader = () => ({
     Authorization: `Bearer ${getToken()}`,
   },
 });
+
+// export const createOptionsArray = (arrayData = [], keyName, valueName) =>
+//   !arrayData?.length
+//     ? []
+//     : arrayData.map(({ [keyName]: label, [valueName]: value }) => ({
+//         label,
+//         value,
+//       }));

@@ -22,7 +22,14 @@ export const apiCall = (
     customParams: {},
   }
 ) => {
-  console.log(endpoint, params, "onSuccess", "onFailure", method, dyanamicConfig);
+  console.log(
+    endpoint,
+    params,
+    "onSuccess",
+    "onFailure",
+    method,
+    dyanamicConfig
+  );
   let request = {};
   switch (method) {
     case METHOD.POST:
@@ -71,7 +78,9 @@ export const apiCall = (
   }
   request
     .then((response) => {
-      if (
+      if (dyanamicConfig.showErrorToast && response.data.success === 0 && response.data.error) {
+        toast.error(response.data.error);
+      } else if (
         response.status == 200 ||
         response.status == 201 ||
         response.status == 204 ||
@@ -79,7 +88,7 @@ export const apiCall = (
       ) {
         onSuccess(response.data);
       } else {
-        console.log(response.data)
+        console.log(response.data);
         onFailure("Something went wrong");
       }
     })
@@ -90,6 +99,7 @@ export const apiCall = (
         error.response.data.error &&
         error.response.data.success === 0
       ) {
+        console.log(error.response);
         toast.error(error.response.data.error);
       }
       if (error && error.response) {

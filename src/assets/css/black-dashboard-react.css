@@ -13668,3 +13668,6 @@ select.form-control option {
   top: 9%;
   opacity: 0.5;
 }
+.cursor-pointer {
+  cursor: pointer;
+}

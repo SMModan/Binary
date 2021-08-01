@@ -13,7 +13,7 @@ import BackgroundColorWrapper from "./components/BackgroundColorWrapper/Backgrou
 import ToastMessage from "./components/ToastMessage";
 
 ReactDOM.render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <Provider store={store}>
       <ThemeContextWrapper>
         <BackgroundColorWrapper>
@@ -22,7 +22,7 @@ ReactDOM.render(
         </BackgroundColorWrapper>
       </ThemeContextWrapper>
     </Provider>,
-  // </React.StrictMode>,
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

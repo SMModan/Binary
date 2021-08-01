@@ -1,11 +1,16 @@
 import SidebarAdminLayout from "../components/SidebarAdminLayout";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../redux/action/ProductsAction";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import EditProductModal from "../components/Product/EditProductModal";
 
 export default function UserList() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.ProductsReducer.productList);
+  const [modal, setModal] = useState(false);
+  const [product, setProduct] = useState({});
   useEffect(() => {
     dispatch(getProducts());
   }, []);
@@ -25,7 +30,22 @@ export default function UserList() {
                     {/* <h6 class="mb-0">Mailchimp</h6> <span>1 days ago</span> */}
                   </div>
                 </div>
-                <div class="badge"> {/* <span>Design</span> */}</div>
+                <div>
+                  <div
+                    class="badge cursor-pointer"
+                    onClick={() => {
+                      setProduct(item);
+                      setModal(true);
+                    }}
+                  >
+                    {" "}
+                    <FontAwesomeIcon size="2x" icon={faPen} />
+                  </div>
+                  <div class="badge cursor-pointer">
+                    {" "}
+                    <FontAwesomeIcon size="2x" icon={faTrash} />
+                  </div>
+                </div>
               </div>
               <div class="mt-5">
                 <h3 class="heading">{item.title}</h3>
@@ -50,6 +70,7 @@ export default function UserList() {
             </div>
           </div>
         ))}
+        <EditProductModal {...{ modal, setModal, product }} />
       </div>
     </div>
   );
