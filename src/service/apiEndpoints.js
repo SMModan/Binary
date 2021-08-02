@@ -12,3 +12,8 @@ export const LOGOUT_SERVICE = "/company/logout";
 export const PRODUCT_LIST = "/product/list";
 export const PRODUCT_CREATE = "/product/create";
 export const PRODUCT_UD = (id) => `/product/${id}`;
+
+// PLAN API END POINTS
+export const PLAN_LIST = "/plan/list";
+export const PLAN_CREATE = "/plan/create";
+export const PLAN_UD = (id) => `/plan/${id}`;
