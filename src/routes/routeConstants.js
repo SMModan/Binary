@@ -5,8 +5,6 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import VerifyOTP from "../pages/VerifyOTP";
 import UserProfile from "../pages/UserProfile";
-import { Redirect } from "react-router";
-import React from "react";
 import Plan from "../pages/Plan";
 import ProductList from "../pages/ProductList";
 

@@ -13671,3 +13671,6 @@ select.form-control option {
 .cursor-pointer {
   cursor: pointer;
 }
+.custom-plan-input .form-check .form-check-label{
+  padding-left: 8px;
+}

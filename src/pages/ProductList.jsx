@@ -16,17 +16,15 @@ export default function ProductList() {
   useEffect(() => {
     if (!modal) {
       setLoadingProduct(false);
+      setProduct({});
     }
   }, [modal]);
   useEffect(() => {
     if (!loadingProduct) {
       dispatch(getProducts());
-      setProduct({});
     }
   }, [loadingProduct]);
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+
   return (
     <div className="content">
       <Table className="tablesorter" responsive>

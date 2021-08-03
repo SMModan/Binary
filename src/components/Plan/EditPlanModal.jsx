@@ -13,9 +13,9 @@ const EditPlanModal = (props) => {
     className,
     modal,
     setModal,
-    product,
-    loadingProduct,
-    setLoadingProduct,
+    plan,
+    loadingPlan,
+    setLoadingPlan,
   } = props;
 
   const toggle = () => setModal((prev) => !prev);
@@ -24,14 +24,14 @@ const EditPlanModal = (props) => {
     <div>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>
-          {`${product.id ? "Edit" : "Create"}`} Plan
+          {`${plan.id ? "Edit" : "Create"}`} Plan
         </ModalHeader>
         <EditPlan
-          isCreateProdct={!product.id}
-          product={product}
+          isCreatePlan={!plan.id}
+          plan={plan}
           setModal={setModal}
-          setLoadingProduct={setLoadingProduct}
-          loadingProduct={loadingProduct}
+          setLoadingPlan={setLoadingPlan}
+          loadingPlan={loadingPlan}
         />
       </Modal>
     </div>

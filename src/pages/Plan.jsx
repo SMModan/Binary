@@ -1,29 +1,32 @@
 import { Table } from "reactstrap";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePlan, getPlan } from "../redux/action";
+import { deletePlan, getPlan, getProducts } from "../redux/action";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import EditPlanModal from "../components/Plan/EditPlanModal";
 
 export default function Plan() {
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.ProductsReducer.productList);
-  const loading = useSelector((state) => state.ProductsReducer.loading);
+  const planList = useSelector((state) => state.PlanReducer.planList);
+  const loading = useSelector((state) => state.PlanReducer.loading);
   const [modal, setModal] = useState(false);
-  const [loadingProduct, setLoadingProduct] = useState(false);
-  const [product, setProduct] = useState({});
+  const [plan, setPlan] = useState({});
+  const [loadingPlan, setLoadingPlan] = useState(false);
   useEffect(() => {
     if (!modal) {
-      setLoadingProduct(false);
+      setLoadingPlan(false);
+      setPlan({});
     }
   }, [modal]);
   useEffect(() => {
-    if (!loadingProduct) {
+    dispatch(getProducts());
+  }, []);
+  useEffect(() => {
+    if (!loadingPlan) {
       dispatch(getPlan());
-      setProduct({});
     }
-  }, [loadingProduct]);
+  }, [loadingPlan]);
   return (
     <div className="content">
       <Table className="tablesorter" responsive>
@@ -45,8 +48,8 @@ export default function Plan() {
           </tr>
         </thead>
         <tbody>
-          {productList &&
-            productList.map((item) => (
+          {planList &&
+            planList.map((item) => (
               <tr>
                 <td>{item.title}</td>
                 <td className="text-center">
@@ -54,7 +57,7 @@ export default function Plan() {
                   <FontAwesomeIcon
                     className="cursor-pointer"
                     onClick={() => {
-                      setProduct(item);
+                      setPlan(item);
                       setModal(true);
                     }}
                     size="1x"
@@ -65,14 +68,9 @@ export default function Plan() {
                   {" "}
                   <FontAwesomeIcon
                     onClick={() => {
-                      setLoadingProduct(true);
+                      setLoadingPlan(true);
                       dispatch(
-                        deletePlan(
-                          undefined,
-                          item.id,
-                          setLoadingProduct,
-                          true
-                        )
+                        deletePlan(undefined, item.id, setLoadingPlan, true)
                       );
                     }}
                     className="cursor-pointer"
@@ -86,7 +84,7 @@ export default function Plan() {
         </tbody>
       </Table>
       <EditPlanModal
-        {...{ modal, setModal, product, loadingProduct, setLoadingProduct }}
+        {...{ modal, setModal, plan, loadingPlan, setLoadingPlan }}
       />
       {loading && <div className="cover-spin" role="status" />}
     </div>
