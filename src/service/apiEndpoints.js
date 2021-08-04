@@ -17,3 +17,8 @@ export const PRODUCT_UD = (id) => `/product/${id}`;
 export const PLAN_LIST = "/plan/list";
 export const PLAN_CREATE = "/plan/create";
 export const PLAN_UD = (id) => `/plan/${id}`;
+
+// COUPON API END POINTS
+export const COUPON_LIST = "/coupon/list";
+export const COUPON_CREATE = "/coupon/create";
+export const COUPON_UD = (id) => `/coupon/${id}`;

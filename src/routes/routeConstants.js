@@ -7,6 +7,7 @@ import VerifyOTP from "../pages/VerifyOTP";
 import UserProfile from "../pages/UserProfile";
 import Plan from "../pages/Plan";
 import ProductList from "../pages/ProductList";
+import Coupon from "../pages/Coupon";
 
 export const publicRoutes = [
   {
@@ -47,6 +48,14 @@ export const secureRoutes = [
     path: "/products",
     component: ProductList,
     name: "Product List",
+    isShowInSidebar: true,
+    showHeader: true,
+    showSidebar: true,
+  },
+  {
+    path: "/coupon",
+    component: Coupon,
+    name: "Coupon",
     isShowInSidebar: true,
     showHeader: true,
     showSidebar: true,

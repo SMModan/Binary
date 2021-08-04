@@ -36,10 +36,10 @@ export default function EditPlan({
       name: plan.title,
       description: plan.description,
       amount: plan.amount,
-      plan_interval: plan.plan_interval,
+      plan_interval: plan.plan_interval || "month",
       interval_count: plan.interval_count,
     },
-    // validationSchema: CreatePlanSchema,
+    validationSchema: CreatePlanSchema,
     onSubmit: (values) => {
       console.log(values);
       setLoadingPlan(true);
@@ -52,6 +52,7 @@ export default function EditPlan({
     label: item.title,
     value: item.id,
   }));
+  const { errors, touched } = formik;
   return (
     <React.Fragment>
       <ModalBody>
@@ -59,6 +60,7 @@ export default function EditPlan({
           <FormGroup>
             <label>Select Product</label>
             <Select
+              name="product_id"
               placeholder="Select Product"
               value={ProductDropdown.find(
                 (item) => item.value === formik.values.product_id
@@ -67,8 +69,20 @@ export default function EditPlan({
               onChange={(selectedOption) =>
                 formik.setFieldValue("product_id", selectedOption.value)
               }
+              onBlur={formik.handleBlur}
             />
           </FormGroup>
+          {errors.product_id && touched.product_id && (
+            <React.Fragment>
+              <div
+                className="text-danger float-left ml-4"
+                // style={{ marginLeft: "40px" }}
+              >
+                {errors.product_id}
+              </div>
+              <br />
+            </React.Fragment>
+          )}
           <FormGroup>
             <label>Plan name</label>
             <Input
@@ -77,8 +91,21 @@ export default function EditPlan({
               onChange={formik.handleChange}
               placeholder="Plan name"
               type="text"
+              onBlur={formik.handleBlur}
             />
           </FormGroup>
+          {errors.name && touched.name && (
+            <React.Fragment>
+              <div
+                className="text-danger float-left ml-4"
+                // style={{ marginLeft: "40px" }}
+              >
+                {errors.name}
+              </div>
+              <br />
+            </React.Fragment>
+          )}
+
           <FormGroup>
             <label>Plan description</label>
             <Input
@@ -87,6 +114,7 @@ export default function EditPlan({
               onChange={formik.handleChange}
               placeholder="Plan description"
               type="text"
+              onBlur={formik.handleBlur}
             />
           </FormGroup>
           <FormGroup>
@@ -96,9 +124,21 @@ export default function EditPlan({
               value={formik.values.amount}
               onChange={formik.handleChange}
               placeholder="Plan Amount"
+              onBlur={formik.handleBlur}
               type="number"
             />
           </FormGroup>
+          {errors.amount && touched.amount && (
+            <React.Fragment>
+              <div
+                className="text-danger float-left ml-4"
+                // style={{ marginLeft: "40px" }}
+              >
+                {errors.amount}
+              </div>
+              <br />
+            </React.Fragment>
+          )}
           <FormGroup>
             <label>Plan interval</label>
             <div className="custom-plan-input">
@@ -168,9 +208,20 @@ export default function EditPlan({
               onChange={formik.handleChange}
               placeholder="Plan interval count"
               type="number"
-              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
           </FormGroup>
+          {errors.interval_count && touched.interval_count && (
+            <React.Fragment>
+              <div
+                className="text-danger float-left ml-4"
+                // style={{ marginLeft: "40px" }}
+              >
+                {errors.interval_count}
+              </div>
+              <br />
+            </React.Fragment>
+          )}
         </Form>
       </ModalBody>
       <ModalFooter>
