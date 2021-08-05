@@ -35,8 +35,13 @@ const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Email is invalid").required("Email is Required"),
   password: Yup.string().required("Password is required"),
 });
-
+const ResetPaaswordSchema = Yup.object().shape({
+  password: Yup.string().required("Password is required"),
+  passwordConfirmation: Yup.string()
+    .equalTo(Yup.ref("password"), "Passwords must match")
+    .required("Required"),
+});
 const ForgotPasswordSchema = Yup.object().shape({
   email: Yup.string().email("Email is invalid").required("Email is Required"),
 });
-export { SignupSchema, LoginSchema, ForgotPasswordSchema };
+export { SignupSchema, LoginSchema, ForgotPasswordSchema, ResetPaaswordSchema };

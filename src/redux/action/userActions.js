@@ -7,6 +7,7 @@ import {
   VERIFY_OTP,
   GET_PROFILE_SERVICE,
   LOGOUT_SERVICE,
+  RESET_PASSWORD_SERVICE,
 } from "../../service/apiEndpoints";
 import { apiCall, METHOD } from "../../service/baseApiCall";
 import {
@@ -16,7 +17,9 @@ import {
   LOGOUT,
   VERIFY_OTP_ACTION,
   GET_PROFILE,
+  RESET_PASSWORD,
 } from "../constants/action-types";
+import { toast } from "react-toastify";
 
 export const login = (data) => (dispatch) => {
   dispatch(loginInit(data));
@@ -30,7 +33,7 @@ const loginInit = (data) => (dispatch) => {
     data,
     (res) => dispatch(loginSuccess(res)),
     (err) => dispatch(loginError(err)),
-    METHOD.POST,
+    METHOD.POST
   );
 };
 const loginSuccess = (res) => (dispatch) => {
@@ -119,13 +122,13 @@ const logoutInit = () => (dispatch) => {
   );
 };
 const logoutSuccess = () => (dispatch) => {
-  removeToken()
+  removeToken();
   dispatch({
     type: LOGOUT.LOGOUT_SUCCESS,
   });
 };
 const logoutError = () => (dispatch) => {
-  removeToken()
+  removeToken();
   dispatch({
     type: LOGOUT.LOGOUT_ERORR,
   });
@@ -204,7 +207,7 @@ const getProfileInit = (data) => (dispatch) => {
 const getProfileSuccess = (payload) => (dispatch) => {
   dispatch({
     type: GET_PROFILE.GET_PROFILE_SUCCESS,
-    payload
+    payload,
   });
 };
 const getProfileError = () => (dispatch) => {
@@ -215,6 +218,33 @@ const getProfileError = () => (dispatch) => {
 export const updateUserProfileForm = (payload) => (dispatch) => {
   dispatch({
     type: GET_PROFILE.UPDATE_USER_FORM_DATA,
-    payload
+    payload,
+  });
+};
+
+export const resetPassword = (data) => (dispatch) => {
+  dispatch(resetPasswordInit(data));
+};
+const resetPasswordInit = (data) => (dispatch) => {
+  dispatch({
+    type: RESET_PASSWORD.RESET_PASSWORD_INITLIZATION,
+  });
+  apiCall(
+    RESET_PASSWORD_SERVICE,
+    data,
+    (res) => dispatch(resetPasswordSuccess(res.data)),
+    (err) => dispatch(resetPasswordError(err)),
+    METHOD.POST
+  );
+};
+const resetPasswordSuccess = (payload) => (dispatch) => {
+  toast.success(payload.message);
+  dispatch({
+    type: RESET_PASSWORD.RESET_PASSWORD_SUCCESS,
+  });
+};
+const resetPasswordError = () => (dispatch) => {
+  dispatch({
+    type: RESET_PASSWORD.RESET_PASSWORD_ERORR,
   });
 };

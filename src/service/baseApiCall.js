@@ -78,15 +78,21 @@ export const apiCall = (
   }
   request
     .then((response) => {
-      console.log(dyanamicConfig, response.data.success);
+      console.log(
+        dyanamicConfig.showErrorToast,
+        response.data.success,
+        typeof response.data.error.message
+      );
       if (dyanamicConfig.showErrorToast && response.data.success === 0) {
-        toast.error(response.data.error);
+        let error = response.data.error;
+        toast.error(typeof error === "string" ? error : error.message);
       }
       if (
-       ( response.status == 200 ||
-        response.status == 201 ||
-        response.status == 204 ||
-        response.data) && response.data.success === 1
+        (response.status == 200 ||
+          response.status == 201 ||
+          response.status == 204 ||
+          response.data) &&
+        response.data.success === 1
       ) {
         onSuccess(response && response.data);
       } else {

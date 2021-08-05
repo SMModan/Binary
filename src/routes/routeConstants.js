@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import VerifyOTP from "../pages/VerifyOTP";
+import ResetPassword from "../pages/ResetPassword";
 import UserProfile from "../pages/UserProfile";
 import Plan from "../pages/Plan";
 import ProductList from "../pages/ProductList";
@@ -25,6 +26,10 @@ export const publicRoutes = [
   {
     path: "/verify-OTP",
     component: VerifyOTP,
+  },
+  {
+    path: "/reset-password",
+    component: ResetPassword,
   },
 ];
 export const secureRoutes = [

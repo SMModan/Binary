@@ -7,6 +7,7 @@ export const VERIFY_OTP = "/company/verifyOtp";
 export const GET_PROFILE_SERVICE = "/company/profile";
 export const EDIT_PROFILE = "/company/editProfile";
 export const LOGOUT_SERVICE = "/company/logout";
+export const RESET_PASSWORD_SERVICE = "/company/resetpassword";
 
 // PRODUCTS API END POINTS
 export const PRODUCT_LIST = "/product/list";

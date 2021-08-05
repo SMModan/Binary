@@ -5,7 +5,7 @@ import {
   FORGOT_PASSWORD,
   LOGOUT,
   VERIFY_OTP_ACTION,
-  GET_PROFILE,
+  GET_PROFILE,RESET_PASSWORD
 } from "../constants/action-types";
 
 const initialState = {
@@ -13,6 +13,7 @@ const initialState = {
   loading: false,
   isLoggedin: !!getToken(),
   isRegisterd: false,
+  isSetPasswordSuccess: false,
   isForgotpasswordSuccess: false,
   isOTPVerify: false,
 };
@@ -61,6 +62,24 @@ export default (state = initialState, { type, payload = {} }) => {
         isRegisterd: false,
         loading: false,
       };
+      case RESET_PASSWORD.RESET_PASSWORD_INITLIZATION:
+        return {
+          ...state,
+          loading: true,
+        };
+      case RESET_PASSWORD.RESET_PASSWORD_SUCCESS:
+        return {
+          ...state,
+          isSetPasswordSuccess: true,
+          loading: false,
+        };
+      case RESET_PASSWORD.RESET_PASSWORD_ERORR:
+        return {
+          ...state,
+          ...payload,
+          isSetPasswordSuccess: false,
+          loading: false,
+        };
     case FORGOT_PASSWORD.FORGOT_PASSWORD_INITLIZATION:
       return {
         ...state,
