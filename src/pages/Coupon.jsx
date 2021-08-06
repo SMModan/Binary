@@ -10,7 +10,7 @@ export default function Coupon() {
   const dispatch = useDispatch();
   const couponList = useSelector((state) => state.CouponReducer.couponList);
   const loading = useSelector((state) => state.CouponReducer.loading);
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(true);
   const [loadingCoupon, setLoadingCoupon] = useState(false);
   const [coupon, setCoupon] = useState({});
   useEffect(() => {
@@ -68,12 +68,7 @@ export default function Coupon() {
                     onClick={() => {
                       setLoadingCoupon(true);
                       dispatch(
-                        deleteCoupon(
-                          undefined,
-                          item.id,
-                          setLoadingCoupon,
-                          true
-                        )
+                        deleteCoupon(undefined, item.id, setLoadingCoupon, true)
                       );
                     }}
                     className="cursor-pointer"
@@ -87,6 +82,7 @@ export default function Coupon() {
         </tbody>
       </Table>
       <EditCouponModal
+        className="coupon-modal"
         {...{ modal, setModal, coupon, loadingCoupon, setLoadingCoupon }}
       />
       {loading && <div className="cover-spin" role="status" />}

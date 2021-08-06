@@ -144,13 +144,14 @@ const forgotPasswordInit = (data) => (dispatch) => {
   apiCall(
     FORGOT_PASSWORD_SERVICE,
     data,
-    (res) => dispatch(forgotPasswordSuccess(res)),
+    (res) => dispatch(forgotPasswordSuccess(res.data)),
     (err) => dispatch(forgotPasswordError(err)),
     METHOD.POST,
     {}
   );
 };
-const forgotPasswordSuccess = () => (dispatch) => {
+const forgotPasswordSuccess = (payload) => (dispatch) => {
+  toast.success(payload.message);
   dispatch({
     type: FORGOT_PASSWORD.FORGOT_PASSWORD_SUCCESS,
   });

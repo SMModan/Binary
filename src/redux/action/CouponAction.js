@@ -65,7 +65,7 @@ const createCouponInit = (data, isEdit, setModal, isDelete) => (dispacth) => {
     },
     (err) => {
       dispacth(createCouponError(err));
-      setModal(false);
+      // setModal(false);
     },
     isDelete ? METHOD.DELETE : isEdit ? METHOD.PATCH : METHOD.POST,
     {
@@ -81,6 +81,7 @@ const createCouponSuccess = (payload) => (dispacth) => {
   });
 };
 const createCouponError = (payload) => (dispacth) => {
+  toast.error(payload.message)
   dispacth({
     type: CREATE_COUPON_ACTION.CREATE_COUPON_ACTION_ERORR,
     payload,

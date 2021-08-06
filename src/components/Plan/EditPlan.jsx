@@ -48,6 +48,24 @@ export default function EditPlan({
     },
     enableReinitialize: true,
   });
+  useEffect(() => {
+    if (
+      formik.values.plan_interval === "month" &&
+      formik.values.interval_count > 12
+    ) {
+      formik.setFieldValue("interval_count", 12);
+    } else if (
+      formik.values.plan_interval === "week" &&
+      formik.values.interval_count > 52
+    ) {
+      formik.setFieldValue("interval_count", 52);
+    } else if (
+      formik.values.plan_interval === "day" &&
+      formik.values.interval_count > 365
+    ) {
+      formik.setFieldValue("interval_count", 365);
+    }
+  }, [formik.values.plan_interval]);
   const ProductDropdown = productList.map((item) => ({
     label: item.title,
     value: item.id,
@@ -205,7 +223,29 @@ export default function EditPlan({
             <Input
               name="interval_count"
               value={formik.values.interval_count}
-              onChange={formik.handleChange}
+              onChange={({ target: { value } }) => {
+                if (
+                  formik.values.plan_interval === "month" &&
+                  value > 1 &&
+                  value <= 12
+                ) {
+                  formik.setFieldValue("interval_count", value);
+                } else if (
+                  formik.values.plan_interval === "week" &&
+                  value > 0 &&
+                  value <= 52
+                ) {
+                  formik.setFieldValue("interval_count", value);
+                } else if (
+                  formik.values.plan_interval === "day" &&
+                  value > 0 &&
+                  value <= 365
+                ) {
+                  formik.setFieldValue("interval_count", value);
+                } else if (formik.values.plan_interval === "year") {
+                  formik.setFieldValue("interval_count", value);
+                }
+              }}
               placeholder="Plan interval count"
               type="number"
               onBlur={formik.handleBlur}

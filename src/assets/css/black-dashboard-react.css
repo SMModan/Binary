@@ -13674,3 +13674,6 @@ select.form-control option {
 .custom-plan-input .form-check .form-check-label{
   padding-left: 8px;
 }
+.modal-dialog.coupon-modal{
+  max-width: 565px
+}

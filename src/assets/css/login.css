@@ -87,6 +87,7 @@ input[type="reset"]:active {
   transform: scale(0.95);
 }
 
+.custom-input input[type="date"],
 .custom-input input[type="number"],
 .custom-input input[type="text"],
 .custom-input input[type="password"],
