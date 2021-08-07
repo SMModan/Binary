@@ -45,6 +45,7 @@ export default function EditCoupon({
   const addMonths = (d, months) => {
     return d.setMonth(d.getMonth() + months);
   };
+  const [apiError, setApiError] = useState("");
   const dispatch = useDispatch();
   const [offType, setOffType] = useState(
     coupon.percent_off ? "percentage" : "amount"
@@ -53,7 +54,8 @@ export default function EditCoupon({
     initialValues: {
       name: coupon.name,
       code: coupon.code,
-      duration: coupon.duration || {
+      duration: (coupon.duration &&
+        durationDropdown.find((item) => item.value === coupon.duration)) || {
         label: "Once",
         value: "once",
       },
@@ -66,14 +68,26 @@ export default function EditCoupon({
       const keyOff = offType === "amount" ? "amount_off" : "percent_off";
       let payload = { ...values };
       delete payload.amount_off;
-      payload = { ...payload, [keyOff]: values.amount_off , duration: values.duration.value};
+      payload = {
+        ...payload,
+        [keyOff]: values.amount_off,
+        duration: values.duration.value,
+      };
       // console.log(payload);
       setLoadingCoupon(true);
-      dispatch(createCoupon(payload, coupon.id || 0, setModal));
+      dispatch(
+        createCoupon(payload, coupon.id || 0, setModal, false, setApiError)
+      );
       // formik.resetForm();
     },
     enableReinitialize: true,
   });
+  useEffect(() => {
+    if (apiError) {
+      setApiError("");
+    }
+  }, [formik.values]);
+  const { errors, touched } = formik;
   return (
     <React.Fragment>
       <ModalBody>
@@ -88,8 +102,20 @@ export default function EditCoupon({
                   onChange={formik.handleChange}
                   placeholder="Coupon name"
                   type="text"
+                  onBlur={formik.handleBlur}
                 />
               </FormGroup>
+              {errors.name && touched.name && (
+                <React.Fragment>
+                  <div
+                    className="text-danger float-left ml-4"
+                    // style={{ marginLeft: "40px" }}
+                  >
+                    {errors.name}
+                  </div>
+                  <br />
+                </React.Fragment>
+              )}
             </Col>
           </Row>
           <Row>
@@ -102,8 +128,20 @@ export default function EditCoupon({
                   onChange={formik.handleChange}
                   placeholder="Coupon code"
                   type="text"
+                  onBlur={formik.handleBlur}
                 />
               </FormGroup>
+              {errors.code && touched.code && (
+                <React.Fragment>
+                  <div
+                    className="text-danger float-left ml-4"
+                    // style={{ marginLeft: "40px" }}
+                  >
+                    {errors.code}
+                  </div>
+                  <br />
+                </React.Fragment>
+              )}
             </Col>
             <Col md="6">
               <FormGroup>
@@ -116,8 +154,20 @@ export default function EditCoupon({
                     formik.setFieldValue("duration", selectedValue)
                   }
                   placeholder="add duration"
+                  onBlur={formik.handleBlur}
                 />
               </FormGroup>
+              {errors.duration && touched.duration && (
+                <React.Fragment>
+                  <div
+                    className="text-danger float-left ml-4"
+                    // style={{ marginLeft: "40px" }}
+                  >
+                    {errors.duration}
+                  </div>
+                  <br />
+                </React.Fragment>
+              )}
             </Col>
           </Row>
           {formik.values.duration.value === "repeating" && (
@@ -177,7 +227,19 @@ export default function EditCoupon({
                   placeholder={`Coupon off ${offType} `}
                   type="number"
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
+                {errors.amount_off && touched.amount_off && (
+                  <React.Fragment>
+                    <div
+                      className="text-danger float-left ml-4"
+                      // style={{ marginLeft: "40px" }}
+                    >
+                      {errors.amount_off}
+                    </div>
+                    <br />
+                  </React.Fragment>
+                )}
               </FormGroup>
             </Col>
           </Row>
@@ -198,6 +260,17 @@ export default function EditCoupon({
             </Col>
           </Row>
         </Form>
+        {apiError && (
+          <React.Fragment>
+            <div
+              className="text-danger float-left ml-4"
+              // style={{ marginLeft: "40px" }}
+            >
+              {apiError}
+            </div>
+            <br />
+          </React.Fragment>
+        )}
       </ModalBody>
       <ModalFooter>
         {loadingCoupon ? (

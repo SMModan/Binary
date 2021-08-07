@@ -10,8 +10,7 @@ import {
 } from "../constants/action-types";
 import { toast } from "react-toastify";
 
-export const getCoupon = (payload) => (dispacth) =>
-  dispacth(getCouponInit());
+export const getCoupon = (payload) => (dispacth) => dispacth(getCouponInit());
 
 const getCouponInit = () => (dispacth) => {
   dispacth({
@@ -45,14 +44,26 @@ const getCouponError = (payload) => (dispacth) => {
   });
 };
 
-export const deleteCoupon = (data, isEdit = 0, setLoading, isDelete = false) => (
+export const deleteCoupon = (
+  data,
+  isEdit = 0,
+  setLoading,
+  isDelete = false
+) => (dispacth) =>
+  dispacth(createCouponInit(data, isEdit, setLoading, isDelete));
+
+export const createCoupon = (
+  data,
+  isEdit = 0,
+  setModal,
+  isDelete = false,
+  setApiError
+) => (dispacth) =>
+  dispacth(createCouponInit(data, isEdit, setModal, isDelete, setApiError));
+
+const createCouponInit = (data, isEdit, setModal, isDelete, setApiError) => (
   dispacth
-) => dispacth(createCouponInit(data, isEdit, setLoading, isDelete));
-
-export const createCoupon = (data, isEdit = 0, setModal) => (dispacth) =>
-  dispacth(createCouponInit(data, isEdit, setModal));
-
-const createCouponInit = (data, isEdit, setModal, isDelete) => (dispacth) => {
+) => {
   dispacth({
     type: CREATE_COUPON_ACTION.CREATE_COUPON_ACTION_INITLIZATION,
   });
@@ -64,6 +75,9 @@ const createCouponInit = (data, isEdit, setModal, isDelete) => (dispacth) => {
       setModal(false);
     },
     (err) => {
+      if (setApiError) {
+          setApiError(err.error.message);
+        }
       dispacth(createCouponError(err));
       // setModal(false);
     },
@@ -81,7 +95,7 @@ const createCouponSuccess = (payload) => (dispacth) => {
   });
 };
 const createCouponError = (payload) => (dispacth) => {
-  toast.error(payload.message)
+  toast.error(payload.message);
   dispacth({
     type: CREATE_COUPON_ACTION.CREATE_COUPON_ACTION_ERORR,
     payload,

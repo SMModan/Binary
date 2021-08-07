@@ -10,7 +10,7 @@ export default function Coupon() {
   const dispatch = useDispatch();
   const couponList = useSelector((state) => state.CouponReducer.couponList);
   const loading = useSelector((state) => state.CouponReducer.loading);
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const [loadingCoupon, setLoadingCoupon] = useState(false);
   const [coupon, setCoupon] = useState({});
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function Coupon() {
         <tbody>
           {couponList &&
             couponList.map((item) => (
-              <tr>
+              <tr key={item.id}>
                 <td>{item.name}</td>
                 <td className="text-center">
                   {" "}
