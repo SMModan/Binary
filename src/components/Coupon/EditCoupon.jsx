@@ -45,6 +45,7 @@ export default function EditCoupon({
   const addMonths = (d, months) => {
     return d.setMonth(d.getMonth() + months);
   };
+  const [apiFetch, setApiFetch] = useState(false);
   const [apiError, setApiError] = useState("");
   const dispatch = useDispatch();
   const [offType, setOffType] = useState(
@@ -74,6 +75,7 @@ export default function EditCoupon({
         duration: values.duration.value,
       };
       // console.log(payload);
+      setApiFetch(true);
       setLoadingCoupon(true);
       dispatch(
         createCoupon(payload, coupon.id || 0, setModal, false, setApiError)
@@ -82,6 +84,9 @@ export default function EditCoupon({
     },
     enableReinitialize: true,
   });
+  useEffect(() => {
+    setApiFetch(false);
+  }, [apiError]);
   useEffect(() => {
     if (apiError) {
       setApiError("");
@@ -246,14 +251,15 @@ export default function EditCoupon({
           <Row>
             <Col md="12">
               <FormGroup>
-                <label>Coupon Expiry Date</label>
+                <label>Expiry Date</label>
+                <br />
                 <DatePicker
                   placeholderText="Coupon ExpireDate"
                   name="expireDate"
                   selected={formik.values.expireDate}
                   // onChange={(date) => formik.setFieldValue("expireDate", date)}
                   minDate={new Date()}
-                  maxDate={addMonths(new Date(), 5)}
+                  maxDate={addMonths(new Date(), 12)}
                   showDisabledMonthNavigation
                 />
               </FormGroup>
@@ -273,7 +279,7 @@ export default function EditCoupon({
         )}
       </ModalBody>
       <ModalFooter>
-        {loadingCoupon ? (
+        {apiFetch ? (
           <Button color="primary">Loading..</Button>
         ) : (
           <Button color="primary" onClick={formik.handleSubmit}>

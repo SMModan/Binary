@@ -11795,6 +11795,7 @@ hr {
       cursor: pointer;
       font-size: 0.62475rem;
       padding: 10px 8px;
+      text-align: initial;
       line-height: 1.625rem; }
     .sidebar .nav li:first-child > a,
     .off-canvas-sidebar .nav li:first-child > a {
@@ -13675,5 +13676,8 @@ select.form-control option {
   padding-left: 8px;
 }
 .modal-dialog.coupon-modal{
+  max-width: 565px
+}
+.modal-dialog.plan-modal{
   max-width: 565px
 }

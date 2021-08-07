@@ -27,32 +27,40 @@ export default function Plan() {
       dispatch(getPlan());
     }
   }, [loadingPlan]);
+  if (loading)
+    return (
+      <div className="content">
+        <div className="cover-spin" role="status" />
+      </div>
+    );
   return (
     <div className="content">
-      <Table className="tablesorter" responsive>
-        <thead className="text-primary">
-          <tr>
-            <th>Plan</th>
-            <th className="text-center">Edit</th>
-            <th className="text-center">Delete</th>
-            <th className="text-center">
-              <FontAwesomeIcon
-                className="cursor-pointer"
-                size="2x"
-                onClick={() => {
-                  setModal(true);
-                }}
-                icon={faPlus}
-              />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {planList &&
-            planList.map((item) => (
+      {planList && planList.length ? (
+        <React.Fragment>
+          <Table className="tablesorter" responsive>
+            <thead className="text-primary">
               <tr>
-                <td>{item.title}</td>
-                <td className="text-center">
+                <th>Plan</th>
+                {/* <th className="text-center">Edit</th> */}
+                <th className="text-center">Delete</th>
+                <th className="text-center">
+                  <FontAwesomeIcon
+                    className="cursor-pointer"
+                    size="2x"
+                    onClick={() => {
+                      setModal(true);
+                    }}
+                    icon={faPlus}
+                  />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {planList &&
+                planList.map((item) => (
+                  <tr>
+                    <td>{item.title}</td>
+                    {/* <td className="text-center">
                   {" "}
                   <FontAwesomeIcon
                     className="cursor-pointer"
@@ -63,30 +71,49 @@ export default function Plan() {
                     size="1x"
                     icon={faPen}
                   />
-                </td>
-                <td className="text-center">
-                  {" "}
-                  <FontAwesomeIcon
-                    onClick={() => {
-                      setLoadingPlan(true);
-                      dispatch(
-                        deletePlan(undefined, item.id, setLoadingPlan, true)
-                      );
-                    }}
-                    className="cursor-pointer"
-                    size="1x"
-                    icon={faTrash}
-                  />
-                </td>
-                <td></td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
+                </td> */}
+                    <td className="text-center">
+                      {" "}
+                      <FontAwesomeIcon
+                        onClick={() => {
+                          setLoadingPlan(true);
+                          dispatch(
+                            deletePlan(undefined, item.id, setLoadingPlan, true)
+                          );
+                        }}
+                        className="cursor-pointer"
+                        size="1x"
+                        icon={faTrash}
+                      />
+                    </td>
+                    <td></td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </React.Fragment>
+      ) : (
+        <div>
+          <h3 className="d-inline">Create Plan</h3>
+          {"  "}(
+          <span className="text-warning d-inline">No Plans Created yet</span>)
+          <br />
+          <br />
+          <br />
+          <FontAwesomeIcon
+            className="cursor-pointer"
+            size="3x"
+            onClick={() => {
+              setModal(true);
+            }}
+            icon={faPlus}
+          />
+        </div>
+      )}
       <EditPlanModal
+        className="plan-modal"
         {...{ modal, setModal, plan, loadingPlan, setLoadingPlan }}
       />
-      {loading && <div className="cover-spin" role="status" />}
     </div>
   );
 }

@@ -24,72 +24,95 @@ export default function ProductList() {
       dispatch(getProducts());
     }
   }, [loadingProduct]);
-
+  if (loading)
+    return (
+      <div className="content">
+        <div className="cover-spin" role="status" />
+      </div>
+    );
   return (
     <div className="content">
-      <Table className="tablesorter" responsive>
-        <thead className="text-primary">
-          <tr>
-            <th>Product</th>
-            <th className="text-center">Edit</th>
-            <th className="text-center">Delete</th>
-            <th className="text-center">
-              <FontAwesomeIcon
-                className="cursor-pointer"
-                size="2x"
-                onClick={() => {
-                  setModal(true);
-                }}
-                icon={faPlus}
-              />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {productList &&
-            productList.map((item) => (
-              <tr>
-                <td>{item.title}</td>
-                <td className="text-center">
-                  {" "}
-                  <FontAwesomeIcon
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setProduct(item);
-                      setModal(true);
-                    }}
-                    size="1x"
-                    icon={faPen}
-                  />
-                </td>
-                <td className="text-center">
-                  {" "}
-                  <FontAwesomeIcon
-                    onClick={() => {
-                      setLoadingProduct(true);
-                      dispatch(
-                        deleteProduct(
-                          undefined,
-                          item.id,
-                          setLoadingProduct,
-                          true
-                        )
-                      );
-                    }}
-                    className="cursor-pointer"
-                    size="1x"
-                    icon={faTrash}
-                  />
-                </td>
-                <td></td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
+      {productList && productList.length ? (
+        <Table className="tablesorter" responsive>
+          <thead className="text-primary">
+            <tr>
+              <th>Product</th>
+              <th className="text-center">Edit</th>
+              <th className="text-center">Delete</th>
+              <th className="text-center">
+                <FontAwesomeIcon
+                  className="cursor-pointer"
+                  size="2x"
+                  onClick={() => {
+                    setModal(true);
+                  }}
+                  icon={faPlus}
+                />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {productList &&
+              productList.map((item) => (
+                <tr>
+                  <td>{item.title}</td>
+                  <td className="text-center">
+                    {" "}
+                    <FontAwesomeIcon
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setProduct(item);
+                        setModal(true);
+                      }}
+                      size="1x"
+                      icon={faPen}
+                    />
+                  </td>
+                  <td className="text-center">
+                    {" "}
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        setLoadingProduct(true);
+                        dispatch(
+                          deleteProduct(
+                            undefined,
+                            item.id,
+                            setLoadingProduct,
+                            true
+                          )
+                        );
+                      }}
+                      className="cursor-pointer"
+                      size="1x"
+                      icon={faTrash}
+                    />
+                  </td>
+                  <td></td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+      ) : (
+        <div>
+          <h3 className="d-inline">Create Product</h3>
+          {"  "}(
+          <span className="text-warning d-inline">No Products Created yet</span>)
+          <br />
+          <br />
+          <br />
+          <FontAwesomeIcon
+            className="cursor-pointer"
+            size="3x"
+            onClick={() => {
+              setModal(true);
+            }}
+            icon={faPlus}
+          />
+        </div>
+      )}
       <EditProductModal
         {...{ modal, setModal, product, loadingProduct, setLoadingProduct }}
       />
-      {loading && <div className="cover-spin" role="status" />}
     </div>
   );
 }
