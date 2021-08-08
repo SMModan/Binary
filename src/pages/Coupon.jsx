@@ -31,7 +31,7 @@ export default function Coupon() {
       </div>
     );
   return (
-    <div className="content">
+    <div className="content s-auto">
       {couponList && couponList.length ? (
         <Table className="tablesorter" responsive>
           <thead className="text-primary">

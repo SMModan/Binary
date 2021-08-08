@@ -31,7 +31,7 @@ export default function ProductList() {
       </div>
     );
   return (
-    <div className="content">
+    <div className="content s-auto">
       {productList && productList.length ? (
         <Table className="tablesorter" responsive>
           <thead className="text-primary">

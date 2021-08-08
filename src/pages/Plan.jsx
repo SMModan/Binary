@@ -34,33 +34,32 @@ export default function Plan() {
       </div>
     );
   return (
-    <div className="content">
+    <div className="content s-auto">
       {planList && planList.length ? (
-        <React.Fragment>
-          <Table className="tablesorter" responsive>
-            <thead className="text-primary">
-              <tr>
-                <th>Plan</th>
-                {/* <th className="text-center">Edit</th> */}
-                <th className="text-center">Delete</th>
-                <th className="text-center">
-                  <FontAwesomeIcon
-                    className="cursor-pointer"
-                    size="2x"
-                    onClick={() => {
-                      setModal(true);
-                    }}
-                    icon={faPlus}
-                  />
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {planList &&
-                planList.map((item) => (
-                  <tr>
-                    <td>{item.title}</td>
-                    {/* <td className="text-center">
+        <Table className="tablesorter" responsive>
+          <thead className="text-primary">
+            <tr>
+              <th>Plan</th>
+              {/* <th className="text-center">Edit</th> */}
+              <th className="text-center">Delete</th>
+              <th className="text-center">
+                <FontAwesomeIcon
+                  className="cursor-pointer"
+                  size="2x"
+                  onClick={() => {
+                    setModal(true);
+                  }}
+                  icon={faPlus}
+                />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {planList &&
+              planList.map((item) => (
+                <tr>
+                  <td>{item.title}</td>
+                  {/* <td className="text-center">
                   {" "}
                   <FontAwesomeIcon
                     className="cursor-pointer"
@@ -72,26 +71,25 @@ export default function Plan() {
                     icon={faPen}
                   />
                 </td> */}
-                    <td className="text-center">
-                      {" "}
-                      <FontAwesomeIcon
-                        onClick={() => {
-                          setLoadingPlan(true);
-                          dispatch(
-                            deletePlan(undefined, item.id, setLoadingPlan, true)
-                          );
-                        }}
-                        className="cursor-pointer"
-                        size="1x"
-                        icon={faTrash}
-                      />
-                    </td>
-                    <td></td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table>
-        </React.Fragment>
+                  <td className="text-center">
+                    {" "}
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        setLoadingPlan(true);
+                        dispatch(
+                          deletePlan(undefined, item.id, setLoadingPlan, true)
+                        );
+                      }}
+                      className="cursor-pointer"
+                      size="1x"
+                      icon={faTrash}
+                    />
+                  </td>
+                  <td></td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
       ) : (
         <div>
           <h3 className="d-inline">Create Plan</h3>
