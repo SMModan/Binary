@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import VerifyOTP from "../pages/VerifyOTP";
 import ResetPassword from "../pages/ResetPassword";
 import UserProfile from "../pages/UserProfile";
+import CompleteProfilePage from "../pages/CompleteProfilePage";
 import Plan from "../pages/Plan";
 import ProductList from "../pages/ProductList";
 import Coupon from "../pages/Coupon";
@@ -68,6 +69,12 @@ export const secureRoutes = [
   {
     path: "/profile",
     component: UserProfile,
+    showHeader: true,
+    showSidebar: false,
+  },
+  {
+    path: "/complete-profile",
+    component: CompleteProfilePage,
     showHeader: true,
     showSidebar: false,
   },

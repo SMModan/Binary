@@ -5,11 +5,13 @@ import {
   FORGOT_PASSWORD,
   LOGOUT,
   VERIFY_OTP_ACTION,
-  GET_PROFILE,RESET_PASSWORD
+  GET_PROFILE,
+  RESET_PASSWORD,
 } from "../constants/action-types";
 
 const initialState = {
-  user:{},
+  company: {},
+  user: {},
   loading: false,
   isLoggedin: !!getToken(),
   isRegisterd: false,
@@ -17,7 +19,7 @@ const initialState = {
   isForgotpasswordSuccess: false,
   isOTPVerify: false,
 };
-export default (state = initialState, { type, payload = {} }) => {
+export default (state = initialState, { type, payload = {}, company = {} }) => {
   switch (type) {
     case LOGIN.LOGIN_INITLIZATION:
       return {
@@ -28,6 +30,7 @@ export default (state = initialState, { type, payload = {} }) => {
     case LOGIN.LOGIN_SUCCESS:
       return {
         ...state,
+        company,
         isLoggedin: true,
         loading: false,
       };
@@ -62,24 +65,24 @@ export default (state = initialState, { type, payload = {} }) => {
         isRegisterd: false,
         loading: false,
       };
-      case RESET_PASSWORD.RESET_PASSWORD_INITLIZATION:
-        return {
-          ...state,
-          loading: true,
-        };
-      case RESET_PASSWORD.RESET_PASSWORD_SUCCESS:
-        return {
-          ...state,
-          isSetPasswordSuccess: true,
-          loading: false,
-        };
-      case RESET_PASSWORD.RESET_PASSWORD_ERORR:
-        return {
-          ...state,
-          ...payload,
-          isSetPasswordSuccess: false,
-          loading: false,
-        };
+    case RESET_PASSWORD.RESET_PASSWORD_INITLIZATION:
+      return {
+        ...state,
+        loading: true,
+      };
+    case RESET_PASSWORD.RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        isSetPasswordSuccess: true,
+        loading: false,
+      };
+    case RESET_PASSWORD.RESET_PASSWORD_ERORR:
+      return {
+        ...state,
+        ...payload,
+        isSetPasswordSuccess: false,
+        loading: false,
+      };
     case FORGOT_PASSWORD.FORGOT_PASSWORD_INITLIZATION:
       return {
         ...state,

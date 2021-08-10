@@ -40,6 +40,7 @@ const loginSuccess = (res) => (dispatch) => {
   saveToken(res.data.auth.token);
   dispatch({
     type: LOGIN.LOGIN_SUCCESS,
+    company: res.data.company,
   });
 };
 const loginError = () => (dispatch) => {
