@@ -6,6 +6,7 @@ export const INDUSTRY_LIST_SERVICE = "/company/industryList";
 export const VERIFY_OTP = "/company/verifyOtp";
 export const GET_PROFILE_SERVICE = "/company/profile";
 export const EDIT_PROFILE = "/company/editProfile";
+export const COMPLETE_PROFILE = "/company/complete-profile";
 export const LOGOUT_SERVICE = "/company/logout";
 export const RESET_PASSWORD_SERVICE = "/company/resetpassword";
 

@@ -15,7 +15,7 @@ import {
   Col,
 } from "reactstrap";
 import { getIndustries } from "../../service/APIcalls";
-import { EDIT_PROFILE } from "../../service/apiEndpoints";
+import { COMPLETE_PROFILE } from "../../service/apiEndpoints";
 import { updateUserProfileForm } from "../../redux/action";
 import { useFormik } from "formik";
 import { apiCall, METHOD } from "../../service";
@@ -24,7 +24,12 @@ import SelectContainer from "../SelectContainer";
 import { getData } from "country-list";
 import CurrencyList from "currency-list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFile, faFileUpload, faUpload } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFile,
+  faFileUpload,
+  faUpload,
+} from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 export default function CompleteProfile() {
   // routing_number 110000000
@@ -40,23 +45,65 @@ export default function CompleteProfile() {
   );
   const fileRef = React.useRef(null);
   const [industryOptions, setIndustryOptions] = useState([]);
+  const [fileData, setFileData] = useState({ name: "" });
   const user = useSelector((state) => state.userDataReducer.user);
   const formik = useFormik({
     initialValues: {
       Company_name: user.Company_name,
       Industry_ID: user.Industry_ID,
       email: user.Email,
+      country: "",
+      currency: "",
+      account_number: "",
+      account_holder_name: "",
     },
     // validationSchema: SignupSchema,
     onSubmit: (values) => {
-      handleSubmitApiCall(values);
-      //   dispatch(register(values));
+      const payload = {
+        email: values.email,
+        country: values.country,
+        currency: values.currency,
+        account_number: '000123456789',//values.account_number,
+        account_holder_name: values.account_holder_name,
+        routing_number: "110000000",
+        files:'file_1JLi7yCdW5yUWZjjlpNLCijS'
+      };
+      console.log(payload);
+      handleFileUpload(payload);
     },
     enableReinitialize: true,
   });
+  const handleFileUpload = (values) => {
+    if (!fileData.name) {
+      handleSubmitApiCall(values);
+    } else {
+      let formData = new FormData();
+      const filePayload = {
+        purpose: "additional_verification",
+        file: fileData,
+      };
+      Object.entries(filePayload).forEach(([key, value]) =>
+        formData.append(key, value)
+      );
+      axios
+        .post("https://files.stripe.com/v1/files", formData, {
+          headers: {
+            Authorization:
+              "Basic c2tfdGVzdF9nYlFxRk1kWVpwdE1acHhrc2RtNFVFanMwMGJrRFhEakxsOg==",
+          },
+        })
+        .then((res) => {
+          console.log(res.data.id);
+          handleSubmitApiCall({ ...values, files: res.data.id });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   const handleSubmitApiCall = (values) => {
     apiCall(
-      EDIT_PROFILE,
+      COMPLETE_PROFILE,
       values,
       (res) => toast.success(res.data.message),
       (err) => console.log(err),
@@ -66,9 +113,7 @@ export default function CompleteProfile() {
       }
     );
   };
-  //   const handleStoreChange = (name, value) =>
-  //     dispatch(updateUserProfileForm({ [name]: value }));
-  //   const handleChange = (e) => handleStoreChange(e.target.name, e.target.value);
+  const saveFile = (e) => setFileData(e.target.files[0]);
   useEffect(() => {
     getIndustries(setIndustryOptions);
   }, []);
@@ -97,6 +142,7 @@ export default function CompleteProfile() {
                   onChange={formik.handleChange}
                   placeholder="Company"
                   type="text"
+                  disabled
                 />
               </FormGroup>
             </Col>
@@ -115,6 +161,7 @@ export default function CompleteProfile() {
                     }}
                     options={industryOptions}
                     name="Industry_ID"
+                    isDisabled
                   />
                 </div>
               </FormGroup>
@@ -145,11 +192,14 @@ export default function CompleteProfile() {
                   <SelectContainer
                     placeholder="Currency"
                     value={currencyList.find(
-                      (item) => item.value === formik.values.currency
+                      (item) => item.value.code === formik.values.currency
                     )}
                     onBlur={formik.handleBlur}
                     onChange={(selectedOption) => {
-                      formik.setFieldValue("currency", selectedOption.value);
+                      formik.setFieldValue(
+                        "currency",
+                        selectedOption.value.code
+                      );
                     }}
                     options={currencyList}
                     name="currency"
@@ -189,10 +239,18 @@ export default function CompleteProfile() {
                   hidden
                   placeholder="Account holder name"
                   type="file"
+                  accept="application/pdf, image/jpeg, image/png"
+                  onChange={saveFile}
                 />
                 <br />
-                <FontAwesomeIcon className="cursor-pointer" size="3x" icon={faFileUpload} onClick={() => fileRef.current.click()} />
-              
+                <FontAwesomeIcon
+                  className="cursor-pointer"
+                  size="3x"
+                  icon={faFileUpload}
+                  onClick={() => fileRef.current.click()}
+                />
+                <br />
+                {fileData.name}
               </FormGroup>
             </Col>
           </Row>
