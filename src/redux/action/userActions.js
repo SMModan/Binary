@@ -78,34 +78,36 @@ const registerError = () => (dispatch) => {
   });
 };
 
-export const logout = () => (dispatch) => {
-  dispatch(logoutInit());
+export const logout = (push) => (dispatch) => {
+  dispatch(logoutInit(push));
 };
 
-const logoutInit = () => (dispatch) => {
+const logoutInit = (push) => (dispatch) => {
   dispatch({
     type: LOGOUT.LOGOUT_INITLIZATION,
   });
   apiCall(
     LOGOUT_SERVICE,
     {},
-    (res) => dispatch(logoutSuccess(res)),
-    (err) => dispatch(logoutError(err)),
+    (res) => dispatch(logoutSuccess(res, push)),
+    (err) => dispatch(logoutError(err, push)),
     METHOD.GET,
     { addAuthrize: true, showErrorToast: false }
   );
 };
-const logoutSuccess = () => (dispatch) => {
+const logoutSuccess = (res, push) => (dispatch) => {
   removeToken();
   dispatch({
     type: LOGOUT.LOGOUT_SUCCESS,
   });
+  push("/login");
 };
-const logoutError = () => (dispatch) => {
+const logoutError = (err, push) => (dispatch) => {
   removeToken();
   dispatch({
     type: LOGOUT.LOGOUT_ERORR,
   });
+  push("/login");
 };
 
 export const forgotPassword = (data) => (dispatch) => {

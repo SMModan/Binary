@@ -3,7 +3,11 @@ import AdminNavbar from "./Navbars/AdminNavbar";
 import Sidebar from "./Sidebar/Sidebar";
 import PerfectScrollbar from "perfect-scrollbar";
 import { useHistory, useLocation } from "react-router";
-import { publicRoutes, secureRoutes } from "../routes/routeConstants";
+import {
+  publicRoutes,
+  secureRoutes,
+  publicHeaderRoutes,
+} from "../routes/routeConstants";
 import logo from "../assets/img/react-logo.png";
 
 var ps;
@@ -16,11 +20,13 @@ export default function SidebarAdminLayout(props) {
     showSidebar: false,
   });
   React.useEffect(() => {
-    const data = [...publicRoutes, ...secureRoutes].find((item) => item.path === location.pathname); // set your path data in routing and custmize here
+    const data = [...publicRoutes, ...secureRoutes, ...publicHeaderRoutes].find(
+      (item) => item.path === location.pathname
+    ); // set your path data in routing and custmize here
     if (data) {
       setCurrentPathData(data);
     } else if (location.pathname === "/") {
-      push('/home')
+      push("/home");
     }
   }, [location.pathname, publicRoutes, secureRoutes]);
   const [sidebarOpened, setsidebarOpened] = React.useState(

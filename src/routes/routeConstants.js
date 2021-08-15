@@ -33,7 +33,7 @@ export const publicRoutes = [
     component: ResetPassword,
   },
 ];
-export const secureRoutes = [
+export const publicHeaderRoutes = [
   {
     path: "/home",
     component: Plan,
@@ -42,6 +42,16 @@ export const secureRoutes = [
     showHeader: true,
     showSidebar: false,
   },
+];
+export const secureRoutes = [
+  // {
+  //   path: "/home",
+  //   component: Plan,
+  //   name: "Dashboard",
+  //   isShowInSidebar: false,
+  //   showHeader: true,
+  //   showSidebar: false,
+  // },
   // {
   //   path: "/plan",
   //   component: Plan,

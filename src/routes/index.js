@@ -9,7 +9,11 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
-import { publicRoutes, secureRoutes } from "./routeConstants";
+import {
+  publicRoutes,
+  secureRoutes,
+  publicHeaderRoutes,
+} from "./routeConstants";
 import { useSelector } from "react-redux";
 export default function Routes() {
   const isLoggedin = useSelector((state) => state.userDataReducer.isLoggedin);
@@ -33,10 +37,15 @@ export default function Routes() {
         <Route key={index} {...item} />
       ))}
       <SidebarAdminLayout>
+        {publicHeaderRoutes.map((item, index) => (
+          <Route key={index} {...item} />
+        ))}
+      </SidebarAdminLayout>
+      <SidebarAdminLayout>
         {isLoggedin &&
           secureRoutes.map((item, index) => <Route key={index} {...item} />)}
       </SidebarAdminLayout>
-      <Route render={() => <Redirect to="/login" />} />
+      <Route render={() => <Redirect to="/home" />} />
     </Switch>
   );
 }

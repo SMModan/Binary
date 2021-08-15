@@ -47,11 +47,6 @@ function AdminNavbar(props) {
   const { push } = useHistory();
   const isLoggedin = useSelector((state) => state.userDataReducer.isLoggedin);
 
-  React.useEffect(() => {
-    if (!isLoggedin) {
-      push("/login");
-    }
-  }, [isLoggedin]);
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
@@ -107,9 +102,7 @@ function AdminNavbar(props) {
             {/* <NavbarBrand href="javascript:;" onClick={() => push("/home")}>
               {props.brandText}
             </NavbarBrand> */}
-            <NavItem>
-              Plans
-            </NavItem>
+            <NavItem>Plans</NavItem>
           </div>
           <NavbarToggler onClick={toggleCollapse}>
             <span className="navbar-toggler-bar navbar-kebab" />
@@ -124,7 +117,7 @@ function AdminNavbar(props) {
                   <span className="d-lg-none d-md-block">Search</span>
                 </Button>
               </InputGroup>
-              
+
               <UncontrolledDropdown nav>
                 <DropdownToggle
                   caret
@@ -139,15 +132,22 @@ function AdminNavbar(props) {
                   <p className="d-lg-none">Log out</p>
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-navbar" right tag="ul">
-                  <NavLink tag="li" onClick={() => push("/profile")}>
-                    <DropdownItem className="nav-item">Profile</DropdownItem>
-                  </NavLink>
+                  {isLoggedin && (
+                    <NavLink tag="li" onClick={() => push("/profile")}>
+                      <DropdownItem className="nav-item">Profile</DropdownItem>
+                    </NavLink>
+                  )}
                   <NavLink tag="li">
                     <DropdownItem className="nav-item">Settings</DropdownItem>
                   </NavLink>
                   <DropdownItem divider tag="li" />
-                  <NavLink tag="li" onClick={() => dispatch(logout())}>
-                    <DropdownItem className="nav-item">Log out</DropdownItem>
+                  <NavLink
+                    tag="li"
+                    onClick={() =>
+                      isLoggedin ? dispatch(logout(push)) : push("/login")
+                    }
+                  >
+                    <DropdownItem className="nav-item">{isLoggedin? 'Log out' : 'Log in'}</DropdownItem>
                   </NavLink>
                 </DropdownMenu>
               </UncontrolledDropdown>
