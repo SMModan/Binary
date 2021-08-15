@@ -30,7 +30,9 @@ import {
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-
+import api from "../../service/axiosConfig";
+import { getAPIHeader } from "../../utils";
+import { CompleteProfileSchema } from "../../validationScrema/user";
 export default function CompleteProfile() {
   // routing_number 110000000
   const countryList = getData().map(({ code: value, name: label }) => ({
@@ -57,16 +59,16 @@ export default function CompleteProfile() {
       account_number: "",
       account_holder_name: "",
     },
-    // validationSchema: SignupSchema,
+    validationSchema: CompleteProfileSchema,
     onSubmit: (values) => {
       const payload = {
         email: values.email,
         country: values.country,
         currency: values.currency,
-        account_number: '000123456789',//values.account_number,
+        account_number: "000123456789", //values.account_number,
         account_holder_name: values.account_holder_name,
         routing_number: "110000000",
-        files:'file_1JLi7yCdW5yUWZjjlpNLCijS'
+        files: "file_1JLi7yCdW5yUWZjjlpNLCijS",
       };
       console.log(payload);
       handleFileUpload(payload);
@@ -74,7 +76,7 @@ export default function CompleteProfile() {
     enableReinitialize: true,
   });
   const handleFileUpload = (values) => {
-    if (!fileData.name) {
+    if (fileData && !fileData.name) {
       handleSubmitApiCall(values);
     } else {
       let formData = new FormData();
@@ -102,21 +104,29 @@ export default function CompleteProfile() {
     }
   };
   const handleSubmitApiCall = (values) => {
-    apiCall(
-      COMPLETE_PROFILE,
-      values,
-      (res) => toast.success(res.data.message),
-      (err) => console.log(err),
-      METHOD.POST,
-      {
-        addAuthrize: true,
-      }
-    );
+    api
+      .post(COMPLETE_PROFILE, values, getAPIHeader())
+      .then((res) => {
+        console.log(res.data);
+        window.open(res.data.url);
+      })
+      .catch((err) => console.log(err));
+    // apiCall(
+    //   COMPLETE_PROFILE,
+    //   values,
+    //   (res) => toast.success(res.data.message),
+    //   (err) => console.log(err),
+    //   METHOD.POST,
+    //   {
+    //     addAuthrize: true,
+    //   }
+    // );
   };
   const saveFile = (e) => setFileData(e.target.files[0]);
   useEffect(() => {
     getIndustries(setIndustryOptions);
   }, []);
+  const { errors, touched } = formik;
   return (
     <Card>
       <CardHeader>
@@ -184,6 +194,14 @@ export default function CompleteProfile() {
                   />
                 </div>
               </FormGroup>
+              {errors.country && touched.country && (
+                <span
+                  className="text-danger float-left "
+                  style={{ marginLeft: "40px" }}
+                >
+                  {errors.country}
+                </span>
+              )}
             </Col>
             <Col md="4">
               <FormGroup>
@@ -206,6 +224,14 @@ export default function CompleteProfile() {
                   />
                 </div>
               </FormGroup>
+              {errors.currency && touched.currency && (
+                <span
+                  className="text-danger float-left "
+                  style={{ marginLeft: "40px" }}
+                >
+                  {errors.currency}
+                </span>
+              )}
             </Col>
             <Col className="pr-md-1" md="4">
               <FormGroup>
@@ -213,11 +239,20 @@ export default function CompleteProfile() {
                 <Input
                   name="account_number"
                   value={formik.values.account_number}
+                  onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   placeholder="Account number"
                   type="text"
                 />
               </FormGroup>
+              {errors.account_number && touched.account_number && (
+                <span
+                  className="text-danger float-left "
+                  style={{ marginLeft: "40px" }}
+                >
+                  {errors.account_number}
+                </span>
+              )}
             </Col>
             <Col className="pr-md-1" md="4">
               <FormGroup>
@@ -225,11 +260,20 @@ export default function CompleteProfile() {
                 <Input
                   name="account_holder_name"
                   value={formik.values.account_holder_name}
+                  onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   placeholder="Account holder name"
                   type="text"
                 />
               </FormGroup>
+              {errors.account_holder_name && touched.account_holder_name && (
+                <span
+                  className="text-danger float-left "
+                  style={{ marginLeft: "40px" }}
+                >
+                  {errors.account_holder_name}
+                </span>
+              )}
             </Col>
             <Col className="pr-md-1" md="4">
               <FormGroup>

@@ -13,6 +13,7 @@ import { publicRoutes, secureRoutes } from "./routeConstants";
 import { useSelector } from "react-redux";
 export default function Routes() {
   const isLoggedin = useSelector((state) => state.userDataReducer.isLoggedin);
+  const alloedRoutes = ["/stripe-status"];
   const histroy = useHistory();
   const location = useLocation();
   const isProfileCompleted = useSelector(
@@ -22,7 +23,8 @@ export default function Routes() {
     if (
       isLoggedin &&
       !isProfileCompleted &&
-      location.pathname !== "/complete-profile"
+      location.pathname !== "/complete-profile" &&
+      !alloedRoutes.includes(location.pathname)
     ) {
       histroy.push("/complete-profile");
     }

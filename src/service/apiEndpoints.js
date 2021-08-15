@@ -24,3 +24,7 @@ export const PLAN_UD = (id) => `/plan/${id}`;
 export const COUPON_LIST = "/coupon/list";
 export const COUPON_CREATE = "/coupon/create";
 export const COUPON_UD = (id) => `/coupon/${id}`;
+
+// STRIPE PAYMENT GATEWAY APIS
+export const GET_STRIPE_ACCOUNT_STATUS = (id) => `/company/get-account/${id}`;
+

@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import VerifyOTP from "../pages/VerifyOTP";
 import ResetPassword from "../pages/ResetPassword";
+import StripeStatus from "../pages/StripeStatus";
 import UserProfile from "../pages/UserProfile";
 import CompleteProfilePage from "../pages/CompleteProfilePage";
 import Plan from "../pages/Plan";
@@ -32,6 +33,11 @@ export const publicRoutes = [
     path: "/reset-password",
     component: ResetPassword,
   },
+  {
+    path: "/reset-password",
+    component: ResetPassword,
+  },
+ 
 ];
 export const secureRoutes = [
   {
@@ -75,6 +81,13 @@ export const secureRoutes = [
   {
     path: "/complete-profile",
     component: CompleteProfilePage,
+    showHeader: true,
+    showSidebar: false,
+  },
+  {
+    path: "/stripe-status",
+    component: StripeStatus,
+    isShowInSidebar: false,
     showHeader: true,
     showSidebar: false,
   },

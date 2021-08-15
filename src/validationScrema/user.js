@@ -44,4 +44,20 @@ const ResetPaaswordSchema = Yup.object().shape({
 const ForgotPasswordSchema = Yup.object().shape({
   email: Yup.string().email("Email is invalid").required("Email is Required"),
 });
-export { SignupSchema, LoginSchema, ForgotPasswordSchema, ResetPaaswordSchema };
+
+const CompleteProfileSchema = Yup.object().shape({
+  country: Yup.string().required("Country required"),
+  currency: Yup.string().required("Currency required"),
+  account_holder_name: Yup.string().required("Account holder name required"),
+  account_number: Yup.string()
+    .min(12, "Should at least 12 digit number")
+    .max(16, "Should be less then 16 digit number")
+    .required("Account number required"),
+});
+export {
+  SignupSchema,
+  LoginSchema,
+  ForgotPasswordSchema,
+  ResetPaaswordSchema,
+  CompleteProfileSchema,
+};
