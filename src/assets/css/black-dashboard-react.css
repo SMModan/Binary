@@ -13684,3 +13684,6 @@ select.form-control option {
 .s-auto .table-responsive {
   overflow: auto;
   padding-bottom: 10px; }
+.custom-plan.mt-72{
+  margin-top: 72px;
+}

@@ -1,7 +1,7 @@
 import { GET_PLAN_LIST } from "../constants/action-types";
 const initialState = {
   planList: [],
-  loading: false,
+  loading: true,
 };
 
 export default (state = initialState, { type, payload }) => {

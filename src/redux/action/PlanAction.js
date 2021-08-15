@@ -11,9 +11,9 @@ import {
 import { toast } from "react-toastify";
 
 export const getPlan = (payload) => (dispacth) =>
-  dispacth(getPlanInit());
+  dispacth(getPlanInit(payload));
 
-const getPlanInit = () => (dispacth) => {
+const getPlanInit = (company_id) => (dispacth) => {
   dispacth({
     type: GET_PLAN_LIST.GET_PLAN_LIST_INITLIZATION,
     // payload,
@@ -23,6 +23,7 @@ const getPlanInit = () => (dispacth) => {
     {
       start: 0,
       limit: 10,
+      company_id: company_id || 1
     },
     (res) => dispacth(getPlanSuccess(res.data.list)),
     (err) => dispacth(getPlanError(err)),

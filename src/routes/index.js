@@ -18,27 +18,24 @@ export default function Routes() {
   const isProfileCompleted = useSelector(
     (state) => state.userDataReducer.company.is_profile_completed
   );
-  useEffect(() => {
-    if (
-      isLoggedin &&
-      !isProfileCompleted &&
-      location.pathname !== "/complete-profile"
-    ) {
-      histroy.push("/complete-profile");
-    }
-  }, [isLoggedin, isProfileCompleted, location.pathname]);
+  // useEffect(() => {
+  //   if (
+  //     isLoggedin &&
+  //     !isProfileCompleted &&
+  //     location.pathname !== "/complete-profile"
+  //   ) {
+  //     histroy.push("/complete-profile");
+  //   }
+  // }, [isLoggedin, isProfileCompleted, location.pathname]);
   return (
     <Switch>
       {publicRoutes.map((item, index) => (
         <Route key={index} {...item} />
       ))}
-      {isLoggedin && (
-        <SidebarAdminLayout>
-          {secureRoutes.map((item, index) => (
-            <Route key={index} {...item} />
-          ))}
-        </SidebarAdminLayout>
-      )}
+      <SidebarAdminLayout>
+        {isLoggedin &&
+          secureRoutes.map((item, index) => <Route key={index} {...item} />)}
+      </SidebarAdminLayout>
       <Route render={() => <Redirect to="/login" />} />
     </Switch>
   );

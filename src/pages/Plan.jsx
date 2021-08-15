@@ -1,55 +1,80 @@
 import { Table } from "reactstrap";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePlan, getPlan, getProducts } from "../redux/action";
+import { getCompany, getPlan, getProducts } from "../redux/action";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faTrash,
+  faPlus,
+  faFileInvoiceDollar,
+  faShare,
+} from "@fortawesome/free-solid-svg-icons";
 import EditPlanModal from "../components/Plan/EditPlanModal";
+import { Button } from "reactstrap";
+import Select from "react-select";
 
 export default function Plan() {
   const dispatch = useDispatch();
   const planList = useSelector((state) => state.PlanReducer.planList);
+  const companyList = useSelector((state) => state.CompanyReducer.companyList);
   const loading = useSelector((state) => state.PlanReducer.loading);
   const [modal, setModal] = useState(false);
-  const [plan, setPlan] = useState({});
+  const [selectedCompany, setSelectedCompany] = useState({});
   const [loadingPlan, setLoadingPlan] = useState(false);
   useEffect(() => {
-    if (!modal) {
-      setLoadingPlan(false);
-      setPlan({});
-    }
-  }, [modal]);
-  useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getCompany());
   }, []);
   useEffect(() => {
-    if (!loadingPlan) {
-      dispatch(getPlan());
+    if (companyList.length) {
+      dispatch(getPlan(1 || companyList[0].id));
+      setSelectedCompany({
+        label: companyList[0].Company_name,
+        value: companyList[0].id,
+      });
     }
-  }, [loadingPlan]);
+  }, [companyList]);
+  const refetchPlan = (selectedOption) => {
+    setSelectedCompany(selectedOption);
+    dispatch(getPlan(selectedOption.value));
+  };
   if (loading)
     return (
-      <div className="content">
+      <div className="container">
         <div className="cover-spin" role="status" />
       </div>
     );
   return (
-    <div className="content s-auto">
+    <div className="custom-plan container mt-72 s-auto">
+      <div className="d-flex justify-content-end mb-4">
+        Company &nbsp; : &nbsp;
+        <Select
+          className="w-25"
+          value={selectedCompany}
+          options={companyList.map(({ id: value, Company_name: label }) => ({
+            label,
+            value,
+          }))}
+          onChange={refetchPlan}
+          placeholder="Select company"
+        />
+      </div>
       {planList && planList.length ? (
         <Table className="tablesorter" responsive>
           <thead className="text-primary">
             <tr>
               <th>Plan</th>
-              {/* <th className="text-center">Edit</th> */}
-              <th className="text-center">Delete</th>
+              <th className="text-center">description</th>
+              <th className="text-center">currency</th>
+              <th className="text-center">amount</th>
+              <th className="text-center">interval</th>
+              <th className="text-center">interval count</th>
+              {/* <th className="text-center">Delete</th> */}
               <th className="text-center">
                 <FontAwesomeIcon
                   className="cursor-pointer"
                   size="2x"
-                  onClick={() => {
-                    setModal(true);
-                  }}
-                  icon={faPlus}
+                  icon={faShare}
                 />
               </th>
             </tr>
@@ -59,6 +84,11 @@ export default function Plan() {
               planList.map((item) => (
                 <tr>
                   <td>{item.title}</td>
+                  <td className="text-center">{item.description}</td>
+                  <td className="text-center">{item.currency}</td>
+                  <td className="text-center">{item.amount}</td>
+                  <td className="text-center">{item.plan_interval}</td>
+                  <td className="text-center">{item.interval_count}</td>
                   {/* <td className="text-center">
                   {" "}
                   <FontAwesomeIcon
@@ -71,7 +101,7 @@ export default function Plan() {
                     icon={faPen}
                   />
                 </td> */}
-                  <td className="text-center">
+                  {/* <td className="text-center">
                     {" "}
                     <FontAwesomeIcon
                       onClick={() => {
@@ -84,34 +114,23 @@ export default function Plan() {
                       size="1x"
                       icon={faTrash}
                     />
+                  </td> */}
+                  <td className="text-center">
+                    <Button>Subscribe</Button>
                   </td>
-                  <td></td>
                 </tr>
               ))}
           </tbody>
         </Table>
       ) : (
         <div>
-          <h3 className="d-inline">Create Plan</h3>
-          {"  "}(
-          <span className="text-warning d-inline">No Plans Created yet</span>)
-          <br />
-          <br />
-          <br />
-          <FontAwesomeIcon
-            className="cursor-pointer"
-            size="3x"
-            onClick={() => {
-              setModal(true);
-            }}
-            icon={faPlus}
-          />
+          <h3 className="d-inline">No Plans Found</h3>
         </div>
       )}
-      <EditPlanModal
+      {/* <EditPlanModal
         className="plan-modal"
         {...{ modal, setModal, plan, loadingPlan, setLoadingPlan }}
-      />
+      /> */}
     </div>
   );
 }

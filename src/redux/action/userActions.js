@@ -49,36 +49,9 @@ const loginError = () => (dispatch) => {
   });
 };
 export const register = (data) => (dispatch) => {
-  const { email, Company_name, password, Industry_ID, Employee_size } = data;
-  const registerData = {
-    Company_name,
-    email,
-    password,
-    //Company_logo:,
-    Industry_ID,
-    // Employee_size: Employee_size.toString(),
-    // BR_No: "Test BR",
-    // BR_Proof: "",
-    // BR_Verified: "1",
-    // BR_Verification_Complete_date: "2021-07-20 17:38:16",
-    // Revenue_class: "9",
-    // Revenue_source: "8",
-    // Default_currency: "1",
-    // Accounting_SW_status: "1",
-    // Accounting_SW_type: "1",
-    // Accounting_SW_ID: "Test",
-  };
-  // axios
-  //   .post("http://18.188.8.195:3100/v1/company/signUp", registerData)
-  //   .then((res) => console.log(res))
-  //   .catch((err) => console.log(err));
-  // var formData = new FormData();
-
-  // for (var key in registerData) {
-  //   formData.append(key, registerData[key]);
-  // }
+  delete data.passwordConfirmation;
   localStorage.setItem("email", data.email);
-  dispatch(registerInit(registerData));
+  dispatch(registerInit(data));
 };
 const registerInit = (data) => (dispatch) => {
   dispatch({
