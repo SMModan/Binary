@@ -11,6 +11,7 @@ import CompleteProfilePage from "../pages/CompleteProfilePage";
 import Plan from "../pages/Plan";
 import ProductList from "../pages/ProductList";
 import Coupon from "../pages/Coupon";
+import Subscriptions from "../pages/Subscriptions";
 
 export const publicRoutes = [
   {
@@ -68,6 +69,14 @@ export const secureRoutes = [
     path: "/coupon",
     component: Coupon,
     name: "Coupon",
+    isShowInSidebar: true,
+    showHeader: true,
+    showSidebar: true,
+  },
+  {
+    path: "/subscription",
+    component: Subscriptions,
+    name: "Subscriptions",
     isShowInSidebar: true,
     showHeader: true,
     showSidebar: true,

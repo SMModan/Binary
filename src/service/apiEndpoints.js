@@ -28,3 +28,6 @@ export const COUPON_UD = (id) => `/coupon/${id}`;
 // STRIPE PAYMENT GATEWAY APIS
 export const GET_STRIPE_ACCOUNT_STATUS = (id) => `/company/get-account/${id}`;
 
+// SUBSCRIPTION API END POINTS
+export const SUBSCRIPTION_LIST ="/subscription/subscribers"
+
